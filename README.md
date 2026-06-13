@@ -173,7 +173,3 @@ uwsgi --ini uwsgi.ini
 ```bash
 pytest tests/
 ```
-
-## 许可证
-
-MIT License
