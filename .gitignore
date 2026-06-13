@@ -58,3 +58,7 @@ config.local.py
 
 # Claude Code
 .claude/
+
+# Local files
+GUIDE/
+docs/

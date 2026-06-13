@@ -1,0 +1,75 @@
+{
+  "apifoxProject": "1.0.0",
+  "$schema": {
+    "app": "apifox",
+    "type": "project",
+    "version": "1.2.0"
+  },
+  "info": {
+    "name": "视频上传管理",
+    "description": "K230视频识别接口"
+  },
+  "apiCollection": [
+    {
+      "name": "根目录",
+      "id": 1,
+      "items": [
+        {
+          "name": "视频上传管理",
+          "type": "apiFolder",
+          "items": [
+            {
+              "name": "上传视频文件",
+              "type": "http",
+              "method": "POST",
+              "path": "/api/v1/video/upload",
+              "description": "硬件端上传视频文件到服务器"
+            },
+            {
+              "name": "获取视频流",
+              "type": "http",
+              "method": "GET",
+              "path": "/api/v1/video/stream/{filename}",
+              "description": "获取视频流，支持直接播放"
+            },
+            {
+              "name": "根据ID查询视频",
+              "type": "http",
+              "method": "GET",
+              "path": "/api/v1/video/get/{video_id}",
+              "description": "根据视频ID查询视频信息"
+            },
+            {
+              "name": "更新视频信息",
+              "type": "http",
+              "method": "PUT",
+              "path": "/api/v1/video/update/{video_id}",
+              "description": "更新视频信息"
+            },
+            {
+              "name": "删除视频信息",
+              "type": "http",
+              "method": "DELETE",
+              "path": "/api/v1/video/delete/{video_id}",
+              "description": "删除视频信息"
+            },
+            {
+              "name": "根据设备ID查询",
+              "type": "http",
+              "method": "GET",
+              "path": "/api/v1/video/by-device/{device_id}",
+              "description": "根据设备ID查询所有视频"
+            },
+            {
+              "name": "分页查询视频列表",
+              "type": "http",
+              "method": "GET",
+              "path": "/api/v1/video/list",
+              "description": "分页查询视频列表"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1163 @@
+{
+  "apifoxProject": "1.0.0",
+  "$schema": {
+    "app": "apifox",
+    "type": "project",
+    "version": "1.2.0"
+  },
+  "info": {
+    "name": "iimgptapp",
+    "description": "",
+    "mockRule": {
+      "rules": [],
+      "enableSystemRule": true
+    }
+  },
+  "projectSetting": {
+    "id": "5907850",
+    "auth": {},
+    "securityScheme": {},
+    "gateway": [],
+    "language": "zh-CN",
+    "apiStatuses": [
+      "developing",
+      "testing",
+      "released",
+      "deprecated"
+    ],
+    "mockSettings": {},
+    "preProcessors": [],
+    "postProcessors": [],
+    "advancedSettings": {
+      "enableJsonc": true,
+      "enableBigint": false,
+      "responseValidate": true,
+      "enableTestScenarioSetting": false,
+      "enableYAPICompatScript": false,
+      "isDefaultUrlEncoding": 2,
+      "publishedDocUrlRules": {
+        "defaultRule": "RESOURCE_KEY_ONLY",
+        "resourceKeyStandard": "NEW"
+      },
+      "folderShareExpandModeSettings": {
+        "expandId": [],
+        "mode": "AUTO"
+      }
+    },
+    "initialDisabledMockIds": [],
+    "servers": [
+      {
+        "id": "default",
+        "name": "默认服务",
+        "moduleId": 5342487
+      }
+    ],
+    "cloudMock": {
+      "security": "free",
+      "enable": false,
+      "tokenKey": "apifoxToken"
+    }
+  },
+  "apiCollection": [
+    {
+      "name": "根目录",
+      "id": 50506203,
+      "auth": {},
+      "securityScheme": {},
+      "parentId": 0,
+      "serverId": "",
+      "description": "",
+      "identityPattern": {
+        "httpApi": {
+          "type": "methodAndPath",
+          "bodyType": "",
+          "fields": []
+        }
+      },
+      "shareSettings": {},
+      "visibility": "SHARED",
+      "moduleId": 5342487,
+      "preProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "postProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "inheritPostProcessors": {},
+      "inheritPreProcessors": {},
+      "items": [
+        {
+          "name": "envawareness",
+          "id": 64442921,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 5342487,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "毫米波传感器接口",
+              "id": 65201486,
+              "auth": {},
+              "securityScheme": {},
+              "parentId": 64442921,
+              "serverId": "",
+              "description": "",
+              "identityPattern": {
+                "httpApi": {
+                  "type": "inherit",
+                  "bodyType": "",
+                  "fields": []
+                }
+              },
+              "shareSettings": {},
+              "visibility": "INHERITED",
+              "moduleId": 5342487,
+              "preProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "postProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "inheritPostProcessors": {},
+              "inheritPreProcessors": {},
+              "items": [
+                {
+                  "name": "添加传感器数据接口",
+                  "api": {
+                    "id": "342303348",
+                    "method": "post",
+                    "path": "http://223.247.96.246:30006/api/r60abd1/add",
+                    "parameters": {
+                      "header": [
+                        {
+                          "name": "Content-Type",
+                          "required": true,
+                          "example": "application/json",
+                          "description": "",
+                          "id": "Xhoj3R7W7G",
+                          "type": "string",
+                          "enable": true
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "755668834",
+                        "code": 200,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "integer"
+                            },
+                            "message": {
+                              "type": "string"
+                            },
+                            "success": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "success"
+                          ]
+                        },
+                        "itemSchema": {},
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [
+                      {
+                        "name": "成功示例",
+                        "data": "{\n  \"code\": 0,\n  \"message\": \"\\u6570\\u636e\\u63d2\\u5165\\u6210\\u529f\",\n  \"success\": true\n}\n",
+                        "responseId": "755668834",
+                        "description": "",
+                        "oasKey": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "string"
+                          },
+                          "presence": {
+                            "type": "integer"
+                          },
+                          "movement": {
+                            "type": "integer"
+                          },
+                          "distance": {
+                            "type": "integer"
+                          },
+                          "motion_param": {
+                            "type": "integer"
+                          },
+                          "orientation_x": {
+                            "type": "integer"
+                          },
+                          "orientation_y": {
+                            "type": "integer"
+                          },
+                          "orientation_z": {
+                            "type": "integer"
+                          },
+                          "breath_info": {
+                            "type": "integer"
+                          },
+                          "breath_rate": {
+                            "type": "integer"
+                          },
+                          "heart_rate": {
+                            "type": "integer"
+                          },
+                          "heartbeat": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "timestamp",
+                          "presence",
+                          "movement",
+                          "distance",
+                          "motion_param",
+                          "orientation_x",
+                          "orientation_y",
+                          "orientation_z",
+                          "breath_info",
+                          "breath_rate",
+                          "heart_rate",
+                          "heartbeat"
+                        ]
+                      },
+                      "required": false,
+                      "mediaType": "",
+                      "examples": [
+                        {
+                          "mediaType": "application/json",
+                          "value": "{\"timestamp\": \"2025-08-28 10:43:30.123\", \"presence\": 1, \"movement\": 2, \"distance\": 150, \"motion_param\": 85, \"orientation_x\": 120, \"orientation_y\": -45, \"orientation_z\": 90, \"breath_info\": 1, \"breath_rate\": 18, \"heart_rate\": 72, \"heartbeat\": \"1\",\"deviceid\": \"R60ABD2\"}",
+                          "name": "示例"
+                        }
+                      ],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 20,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "根据ID获取传感器数据接口",
+                  "api": {
+                    "id": "342303817",
+                    "method": "get",
+                    "path": "http://223.247.96.246:30006/api/r60abd1/get_by_deviceid/R60ABD2",
+                    "parameters": {
+                      "query": [],
+                      "path": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "755654699",
+                        "code": 500,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "itemSchema": {},
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [
+                      {
+                        "name": "成功示例",
+                        "data": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>TypeError: Object of type bytes is not JSON serializable\n // Werkzeug Debugger</title>\n    <link rel=\"stylesheet\" href=\"?__debugger__=yes&amp;cmd=resource&amp;f=style.css\">\n    <link rel=\"shortcut icon\"\n        href=\"?__debugger__=yes&amp;cmd=resource&amp;f=console.png\">\n    <script src=\"?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js\"></script>\n    <script>\n      var CONSOLE_MODE = false,\n          EVALEX = true,\n          EVALEX_TRUSTED = false,\n          SECRET = \"1iw9S7G1nSIR8yZkt6Ev\";\n    </script>\n  </head>\n  <body style=\"background-color: #fff\">\n    <div class=\"debugger\">\n<h1>TypeError</h1>\n<div class=\"detail\">\n  <p class=\"errormsg\">TypeError: Object of type bytes is not JSON serializable\n</p>\n</div>\n<h2 class=\"traceback\">Traceback <em>(most recent call last)</em></h2>\n<div class=\"traceback\">\n  <h3></h3>\n  <ul><li><div class=\"frame\" id=\"frame-1824021860480\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1536</em>,\n      in <code class=\"function\">__call__</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">    </span>) -&gt; cabc.Iterable[bytes]:</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;The WSGI server calls the Flask application object as the</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>WSGI application. This calls :meth:`wsgi_app`, which can be</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>wrapped to apply middleware.</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return self.wsgi_app(environ, start_response)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021860640\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1514</em>,\n      in <code class=\"function\">wsgi_app</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>try:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>ctx.push()</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>response = self.full_dispatch_request()</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>except Exception as e:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>error = e</pre>\n<pre class=\"line current\"><span class=\"ws\">                </span>response = self.handle_exception(e)\n<span class=\"ws\">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>except:  # noqa: B001</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>error = sys.exc_info()[1]</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>raise</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>return response(environ, start_response)</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>finally:</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021860800\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask_cors\\extension.py\"</cite>,\n      line <em class=\"line\">176</em>,\n      in <code class=\"function\">wrapped_function</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span># These error handlers will still respect the behavior of the route</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>if options.get(&#34;intercept_exceptions&#34;, True):</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>def _after_request_decorator(f):</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>def wrapped_function(*args, **kwargs):</pre>\n<pre class=\"line current\"><span class=\"ws\">                    </span>return cors_after_request(app.make_response(f(*args, **kwargs)))\n<span class=\"ws\">                    </span>                                            ^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>return wrapped_function</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>if hasattr(app, &#34;handle_exception&#34;):</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>app.handle_exception = _after_request_decorator(app.handle_exception)</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021860960\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1511</em>,\n      in <code class=\"function\">wsgi_app</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>ctx = self.request_context(environ)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>error: BaseException | None = None</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>try:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>try:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>ctx.push()</pre>\n<pre class=\"line current\"><span class=\"ws\">                </span>response = self.full_dispatch_request()\n<span class=\"ws\">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>except Exception as e:</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>error = e</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>response = self.handle_exception(e)</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>except:  # noqa: B001</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>error = sys.exc_info()[1]</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021861120\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">920</em>,\n      in <code class=\"function\">full_dispatch_request</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>rv = self.preprocess_request()</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>if rv is None:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>rv = self.dispatch_request()</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>except Exception as e:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>rv = self.handle_user_exception(e)</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return self.finalize_request(rv)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>def finalize_request(</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>self,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>rv: ft.ResponseReturnValue | HTTPException,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>from_error_handler: bool = False,</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021861280\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">939</em>,\n      in <code class=\"function\">finalize_request</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>with the `from_error_handler` flag.  If enabled, failures in</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>response processing will be logged and otherwise ignored.</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>:internal:</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>response = self.make_response(rv)\n<span class=\"ws\">        </span>           ^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>try:</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>response = self.process_response(response)</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>request_finished.send(</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>self, _async_wrapper=self.ensure_sync, response=response</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>)</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021861440\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1231</em>,\n      in <code class=\"function\">make_response</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">                    </span>status=status,</pre>\n<pre class=\"line before\"><span class=\"ws\">                    </span>headers=headers,  # type: ignore[arg-type]</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>)</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>status = headers = None</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>elif isinstance(rv, (dict, list)):</pre>\n<pre class=\"line current\"><span class=\"ws\">                </span>rv = self.json.response(rv)\n<span class=\"ws\">                </span>     ^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>elif isinstance(rv, BaseResponse) or callable(rv):</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span># evaluate a WSGI callable, or coerce a different response</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span># class to the correct type</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>try:</pre>\n<pre class=\"line after\"><span class=\"ws\">                    </span>rv = self.response_class.force_type(</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021861600\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\"</cite>,\n      line <em class=\"line\">214</em>,\n      in <code class=\"function\">response</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>dump_args.setdefault(&#34;indent&#34;, 2)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>else:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>dump_args.setdefault(&#34;separators&#34;, (&#34;,&#34;, &#34;:&#34;))</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>return self._app.response_class(</pre>\n<pre class=\"line current\"><span class=\"ws\">            </span>f&#34;{self.dumps(obj, **dump_args)}\\n&#34;, mimetype=self.mimetype\n<span class=\"ws\">            </span>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>)</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021861760\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\"</cite>,\n      line <em class=\"line\">179</em>,\n      in <code class=\"function\">dumps</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>:param kwargs: Passed to :func:`json.dumps`.</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>kwargs.setdefault(&#34;default&#34;, self.default)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>kwargs.setdefault(&#34;ensure_ascii&#34;, self.ensure_ascii)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>kwargs.setdefault(&#34;sort_keys&#34;, self.sort_keys)</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return json.dumps(obj, **kwargs)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>def loads(self, s: str | bytes, **kwargs: t.Any) -&gt; t.Any:</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>&#34;&#34;&#34;Deserialize data as JSON from a string or bytes.</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>:param s: Text or UTF-8 bytes.</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021861920\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\json\\__init__.py\"</cite>,\n      line <em class=\"line\">238</em>,\n      in <code class=\"function\">dumps</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>cls = JSONEncoder</pre>\n<pre class=\"line before\"><span class=\"ws\">    </span>return cls(</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>skipkeys=skipkeys, ensure_ascii=ensure_ascii,</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>check_circular=check_circular, allow_nan=allow_nan, indent=indent,</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>separators=separators, default=default, sort_keys=sort_keys,</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>**kw).encode(obj)\n<span class=\"ws\">        </span>      ^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span>_default_decoder = JSONDecoder(object_hook=None, object_pairs_hook=None)</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021862080\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\"</cite>,\n      line <em class=\"line\">200</em>,\n      in <code class=\"function\">encode</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>else:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>return encode_basestring(o)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span># This doesn&#39;t pass the iterator directly to &#39;&#39;.join() because the</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span># exceptions aren&#39;t as detailed.  The list call should be roughly</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span># equivalent to the PySequence_Fast that &#39;&#39;.join() would do.</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>chunks = self.iterencode(o, _one_shot=True)\n<span class=\"ws\">        </span>         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>if not isinstance(chunks, (list, tuple)):</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>chunks = list(chunks)</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>return &#39;&#39;.join(chunks)</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>def iterencode(self, o, _one_shot=False):</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021862240\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\"</cite>,\n      line <em class=\"line\">261</em>,\n      in <code class=\"function\">iterencode</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>else:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>_iterencode = _make_iterencode(</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>markers, self.default, _encoder, indent, floatstr,</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>self.key_separator, self.item_separator, self.sort_keys,</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>self.skipkeys, _one_shot)</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return _iterencode(o, 0)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span>def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>_key_separator, _item_separator, _sort_keys, _skipkeys, _one_shot,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>## HACK: hand-optimized bytecode; turn globals into locals</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>ValueError=ValueError,</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021862400\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\"</cite>,\n      line <em class=\"line\">121</em>,\n      in <code class=\"function\">_default</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>return dataclasses.asdict(o)  # type: ignore[arg-type]</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">    </span>if hasattr(o, &#34;__html__&#34;):</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>return str(o.__html__())</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line current\"><span class=\"ws\">    </span>raise TypeError(f&#34;Object of type {type(o).__name__} is not JSON serializable&#34;)\n<span class=\"ws\">    </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span>class DefaultJSONProvider(JSONProvider):</pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>&#34;&#34;&#34;Provide JSON operations using Python&#39;s built-in :mod:`json`</pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>library. Serializes the following additional data types:</pre></div>\n</div>\n</ul>\n  <blockquote>TypeError: Object of type bytes is not JSON serializable\n</blockquote>\n</div>\n\n<div class=\"plain\">\n    <p>\n      This is the Copy/Paste friendly version of the traceback.\n    </p>\n    <textarea cols=\"50\" rows=\"10\" name=\"code\" readonly>Traceback (most recent call last):\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1536, in __call__\n    return self.wsgi_app(environ, start_response)\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1514, in wsgi_app\n    response = self.handle_exception(e)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask_cors\\extension.py&#34;, line 176, in wrapped_function\n    return cors_after_request(app.make_response(f(*args, **kwargs)))\n                                                ~^^^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1511, in wsgi_app\n    response = self.full_dispatch_request()\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 920, in full_dispatch_request\n    return self.finalize_request(rv)\n           ~~~~~~~~~~~~~~~~~~~~~^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 939, in finalize_request\n    response = self.make_response(rv)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1231, in make_response\n    rv = self.json.response(rv)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py&#34;, line 214, in response\n    f&#34;{self.dumps(obj, **dump_args)}\\n&#34;, mimetype=self.mimetype\n       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py&#34;, line 179, in dumps\n    return json.dumps(obj, **kwargs)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\json\\__init__.py&#34;, line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py&#34;, line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py&#34;, line 261, in iterencode\n    return _iterencode(o, 0)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py&#34;, line 121, in _default\n    raise TypeError(f&#34;Object of type {type(o).__name__} is not JSON serializable&#34;)\nTypeError: Object of type bytes is not JSON serializable\n</textarea>\n</div>\n<div class=\"explanation\">\n  The debugger caught an exception in your WSGI application.  You can now\n  look at the traceback which led to the error.  <span class=\"nojavascript\">\n  If you enable JavaScript you can also use additional features such as code\n  execution (if the evalex feature is enabled), automatic pasting of the\n  exceptions and much more.</span>\n</div>\n      <div class=\"footer\">\n        Brought to you by <strong class=\"arthur\">DON'T PANIC</strong>, your\n        friendly Werkzeug powered traceback interpreter.\n      </div>\n    </div>\n\n    <div class=\"pin-prompt\">\n      <div class=\"inner\">\n        <h3>Console Locked</h3>\n        <p>\n          The console is locked and needs to be unlocked by entering the PIN.\n          You can find the PIN printed out on the standard output of your\n          shell that runs the server.\n        <form>\n          <p>PIN:\n            <input type=text name=pin size=14>\n            <input type=submit name=btn value=\"Confirm Pin\">\n        </form>\n      </div>\n    </div>\n  </body>\n</html>\n\n<!--\n\nTraceback (most recent call last):\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1536, in __call__\n    return self.wsgi_app(environ, start_response)\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1514, in wsgi_app\n    response = self.handle_exception(e)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask_cors\\extension.py\", line 176, in wrapped_function\n    return cors_after_request(app.make_response(f(*args, **kwargs)))\n                                                ~^^^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1511, in wsgi_app\n    response = self.full_dispatch_request()\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 920, in full_dispatch_request\n    return self.finalize_request(rv)\n           ~~~~~~~~~~~~~~~~~~~~~^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 939, in finalize_request\n    response = self.make_response(rv)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1231, in make_response\n    rv = self.json.response(rv)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\", line 214, in response\n    f\"{self.dumps(obj, **dump_args)}\\n\", mimetype=self.mimetype\n       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\", line 179, in dumps\n    return json.dumps(obj, **kwargs)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\json\\__init__.py\", line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\", line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\", line 261, in iterencode\n    return _iterencode(o, 0)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\", line 121, in _default\n    raise TypeError(f\"Object of type {type(o).__name__} is not JSON serializable\")\nTypeError: Object of type bytes is not JSON serializable\n\n\n-->\n",
+                        "responseId": "755654699",
+                        "description": "",
+                        "oasKey": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "mediaType": "",
+                      "examples": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 30,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "获取所有传感器数据接口",
+                  "api": {
+                    "id": "342304278",
+                    "method": "get",
+                    "path": "http://223.247.96.246:30006/api/r60abd1/get_all",
+                    "parameters": {},
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "755656142",
+                        "code": 500,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [
+                      {
+                        "name": "成功示例",
+                        "data": "<!doctype html>\n<html lang=en>\n  <head>\n    <title>TypeError: Object of type bytes is not JSON serializable\n // Werkzeug Debugger</title>\n    <link rel=\"stylesheet\" href=\"?__debugger__=yes&amp;cmd=resource&amp;f=style.css\">\n    <link rel=\"shortcut icon\"\n        href=\"?__debugger__=yes&amp;cmd=resource&amp;f=console.png\">\n    <script src=\"?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js\"></script>\n    <script>\n      var CONSOLE_MODE = false,\n          EVALEX = true,\n          EVALEX_TRUSTED = false,\n          SECRET = \"1iw9S7G1nSIR8yZkt6Ev\";\n    </script>\n  </head>\n  <body style=\"background-color: #fff\">\n    <div class=\"debugger\">\n<h1>TypeError</h1>\n<div class=\"detail\">\n  <p class=\"errormsg\">TypeError: Object of type bytes is not JSON serializable\n</p>\n</div>\n<h2 class=\"traceback\">Traceback <em>(most recent call last)</em></h2>\n<div class=\"traceback\">\n  <h3></h3>\n  <ul><li><div class=\"frame\" id=\"frame-1824021397344\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1536</em>,\n      in <code class=\"function\">__call__</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">    </span>) -&gt; cabc.Iterable[bytes]:</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;The WSGI server calls the Flask application object as the</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>WSGI application. This calls :meth:`wsgi_app`, which can be</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>wrapped to apply middleware.</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return self.wsgi_app(environ, start_response)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021396704\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1514</em>,\n      in <code class=\"function\">wsgi_app</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>try:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>ctx.push()</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>response = self.full_dispatch_request()</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>except Exception as e:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>error = e</pre>\n<pre class=\"line current\"><span class=\"ws\">                </span>response = self.handle_exception(e)\n<span class=\"ws\">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>except:  # noqa: B001</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>error = sys.exc_info()[1]</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>raise</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>return response(environ, start_response)</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>finally:</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021396544\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask_cors\\extension.py\"</cite>,\n      line <em class=\"line\">176</em>,\n      in <code class=\"function\">wrapped_function</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span># These error handlers will still respect the behavior of the route</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>if options.get(&#34;intercept_exceptions&#34;, True):</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>def _after_request_decorator(f):</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>def wrapped_function(*args, **kwargs):</pre>\n<pre class=\"line current\"><span class=\"ws\">                    </span>return cors_after_request(app.make_response(f(*args, **kwargs)))\n<span class=\"ws\">                    </span>                                            ^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>return wrapped_function</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>if hasattr(app, &#34;handle_exception&#34;):</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>app.handle_exception = _after_request_decorator(app.handle_exception)</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021396384\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1511</em>,\n      in <code class=\"function\">wsgi_app</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>ctx = self.request_context(environ)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>error: BaseException | None = None</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>try:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>try:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>ctx.push()</pre>\n<pre class=\"line current\"><span class=\"ws\">                </span>response = self.full_dispatch_request()\n<span class=\"ws\">                </span>           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>except Exception as e:</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>error = e</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>response = self.handle_exception(e)</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>except:  # noqa: B001</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>error = sys.exc_info()[1]</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021862720\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">920</em>,\n      in <code class=\"function\">full_dispatch_request</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>rv = self.preprocess_request()</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>if rv is None:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>rv = self.dispatch_request()</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>except Exception as e:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>rv = self.handle_user_exception(e)</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return self.finalize_request(rv)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>def finalize_request(</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>self,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>rv: ft.ResponseReturnValue | HTTPException,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>from_error_handler: bool = False,</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021860000\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">939</em>,\n      in <code class=\"function\">finalize_request</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>with the `from_error_handler` flag.  If enabled, failures in</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>response processing will be logged and otherwise ignored.</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>:internal:</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>response = self.make_response(rv)\n<span class=\"ws\">        </span>           ^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>try:</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>response = self.process_response(response)</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>request_finished.send(</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>self, _async_wrapper=self.ensure_sync, response=response</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>)</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021863680\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\"</cite>,\n      line <em class=\"line\">1231</em>,\n      in <code class=\"function\">make_response</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">                    </span>status=status,</pre>\n<pre class=\"line before\"><span class=\"ws\">                    </span>headers=headers,  # type: ignore[arg-type]</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>)</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>status = headers = None</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>elif isinstance(rv, (dict, list)):</pre>\n<pre class=\"line current\"><span class=\"ws\">                </span>rv = self.json.response(rv)\n<span class=\"ws\">                </span>     ^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>elif isinstance(rv, BaseResponse) or callable(rv):</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span># evaluate a WSGI callable, or coerce a different response</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span># class to the correct type</pre>\n<pre class=\"line after\"><span class=\"ws\">                </span>try:</pre>\n<pre class=\"line after\"><span class=\"ws\">                    </span>rv = self.response_class.force_type(</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021863840\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\"</cite>,\n      line <em class=\"line\">214</em>,\n      in <code class=\"function\">response</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>dump_args.setdefault(&#34;indent&#34;, 2)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>else:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>dump_args.setdefault(&#34;separators&#34;, (&#34;,&#34;, &#34;:&#34;))</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>return self._app.response_class(</pre>\n<pre class=\"line current\"><span class=\"ws\">            </span>f&#34;{self.dumps(obj, **dump_args)}\\n&#34;, mimetype=self.mimetype\n<span class=\"ws\">            </span>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>)</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021864000\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\"</cite>,\n      line <em class=\"line\">179</em>,\n      in <code class=\"function\">dumps</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>:param kwargs: Passed to :func:`json.dumps`.</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>&#34;&#34;&#34;</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>kwargs.setdefault(&#34;default&#34;, self.default)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>kwargs.setdefault(&#34;ensure_ascii&#34;, self.ensure_ascii)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>kwargs.setdefault(&#34;sort_keys&#34;, self.sort_keys)</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return json.dumps(obj, **kwargs)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>def loads(self, s: str | bytes, **kwargs: t.Any) -&gt; t.Any:</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>&#34;&#34;&#34;Deserialize data as JSON from a string or bytes.</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>:param s: Text or UTF-8 bytes.</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021864160\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\json\\__init__.py\"</cite>,\n      line <em class=\"line\">238</em>,\n      in <code class=\"function\">dumps</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>cls = JSONEncoder</pre>\n<pre class=\"line before\"><span class=\"ws\">    </span>return cls(</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>skipkeys=skipkeys, ensure_ascii=ensure_ascii,</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>check_circular=check_circular, allow_nan=allow_nan, indent=indent,</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>separators=separators, default=default, sort_keys=sort_keys,</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>**kw).encode(obj)\n<span class=\"ws\">        </span>      ^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span>_default_decoder = JSONDecoder(object_hook=None, object_pairs_hook=None)</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021864320\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\"</cite>,\n      line <em class=\"line\">200</em>,\n      in <code class=\"function\">encode</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">            </span>else:</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>return encode_basestring(o)</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span># This doesn&#39;t pass the iterator directly to &#39;&#39;.join() because the</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span># exceptions aren&#39;t as detailed.  The list call should be roughly</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span># equivalent to the PySequence_Fast that &#39;&#39;.join() would do.</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>chunks = self.iterencode(o, _one_shot=True)\n<span class=\"ws\">        </span>         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>if not isinstance(chunks, (list, tuple)):</pre>\n<pre class=\"line after\"><span class=\"ws\">            </span>chunks = list(chunks)</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>return &#39;&#39;.join(chunks)</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>def iterencode(self, o, _one_shot=False):</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021864480\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\"</cite>,\n      line <em class=\"line\">261</em>,\n      in <code class=\"function\">iterencode</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>else:</pre>\n<pre class=\"line before\"><span class=\"ws\">            </span>_iterencode = _make_iterencode(</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>markers, self.default, _encoder, indent, floatstr,</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>self.key_separator, self.item_separator, self.sort_keys,</pre>\n<pre class=\"line before\"><span class=\"ws\">                </span>self.skipkeys, _one_shot)</pre>\n<pre class=\"line current\"><span class=\"ws\">        </span>return _iterencode(o, 0)\n<span class=\"ws\">        </span>       ^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span>def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>_key_separator, _item_separator, _sort_keys, _skipkeys, _one_shot,</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>## HACK: hand-optimized bytecode; turn globals into locals</pre>\n<pre class=\"line after\"><span class=\"ws\">        </span>ValueError=ValueError,</pre></div>\n</div>\n\n<li><div class=\"frame\" id=\"frame-1824021864640\">\n  <h4>File <cite class=\"filename\">\"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\"</cite>,\n      line <em class=\"line\">121</em>,\n      in <code class=\"function\">_default</code></h4>\n  <div class=\"source \"><pre class=\"line before\"><span class=\"ws\">        </span>return dataclasses.asdict(o)  # type: ignore[arg-type]</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line before\"><span class=\"ws\">    </span>if hasattr(o, &#34;__html__&#34;):</pre>\n<pre class=\"line before\"><span class=\"ws\">        </span>return str(o.__html__())</pre>\n<pre class=\"line before\"><span class=\"ws\"></span> </pre>\n<pre class=\"line current\"><span class=\"ws\">    </span>raise TypeError(f&#34;Object of type {type(o).__name__} is not JSON serializable&#34;)\n<span class=\"ws\">    </span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span> </pre>\n<pre class=\"line after\"><span class=\"ws\"></span>class DefaultJSONProvider(JSONProvider):</pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>&#34;&#34;&#34;Provide JSON operations using Python&#39;s built-in :mod:`json`</pre>\n<pre class=\"line after\"><span class=\"ws\">    </span>library. Serializes the following additional data types:</pre></div>\n</div>\n</ul>\n  <blockquote>TypeError: Object of type bytes is not JSON serializable\n</blockquote>\n</div>\n\n<div class=\"plain\">\n    <p>\n      This is the Copy/Paste friendly version of the traceback.\n    </p>\n    <textarea cols=\"50\" rows=\"10\" name=\"code\" readonly>Traceback (most recent call last):\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1536, in __call__\n    return self.wsgi_app(environ, start_response)\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1514, in wsgi_app\n    response = self.handle_exception(e)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask_cors\\extension.py&#34;, line 176, in wrapped_function\n    return cors_after_request(app.make_response(f(*args, **kwargs)))\n                                                ~^^^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1511, in wsgi_app\n    response = self.full_dispatch_request()\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 920, in full_dispatch_request\n    return self.finalize_request(rv)\n           ~~~~~~~~~~~~~~~~~~~~~^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 939, in finalize_request\n    response = self.make_response(rv)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py&#34;, line 1231, in make_response\n    rv = self.json.response(rv)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py&#34;, line 214, in response\n    f&#34;{self.dumps(obj, **dump_args)}\\n&#34;, mimetype=self.mimetype\n       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py&#34;, line 179, in dumps\n    return json.dumps(obj, **kwargs)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\json\\__init__.py&#34;, line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py&#34;, line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py&#34;, line 261, in iterencode\n    return _iterencode(o, 0)\n  File &#34;E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py&#34;, line 121, in _default\n    raise TypeError(f&#34;Object of type {type(o).__name__} is not JSON serializable&#34;)\nTypeError: Object of type bytes is not JSON serializable\n</textarea>\n</div>\n<div class=\"explanation\">\n  The debugger caught an exception in your WSGI application.  You can now\n  look at the traceback which led to the error.  <span class=\"nojavascript\">\n  If you enable JavaScript you can also use additional features such as code\n  execution (if the evalex feature is enabled), automatic pasting of the\n  exceptions and much more.</span>\n</div>\n      <div class=\"footer\">\n        Brought to you by <strong class=\"arthur\">DON'T PANIC</strong>, your\n        friendly Werkzeug powered traceback interpreter.\n      </div>\n    </div>\n\n    <div class=\"pin-prompt\">\n      <div class=\"inner\">\n        <h3>Console Locked</h3>\n        <p>\n          The console is locked and needs to be unlocked by entering the PIN.\n          You can find the PIN printed out on the standard output of your\n          shell that runs the server.\n        <form>\n          <p>PIN:\n            <input type=text name=pin size=14>\n            <input type=submit name=btn value=\"Confirm Pin\">\n        </form>\n      </div>\n    </div>\n  </body>\n</html>\n\n<!--\n\nTraceback (most recent call last):\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1536, in __call__\n    return self.wsgi_app(environ, start_response)\n           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1514, in wsgi_app\n    response = self.handle_exception(e)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask_cors\\extension.py\", line 176, in wrapped_function\n    return cors_after_request(app.make_response(f(*args, **kwargs)))\n                                                ~^^^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1511, in wsgi_app\n    response = self.full_dispatch_request()\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 920, in full_dispatch_request\n    return self.finalize_request(rv)\n           ~~~~~~~~~~~~~~~~~~~~~^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 939, in finalize_request\n    response = self.make_response(rv)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\app.py\", line 1231, in make_response\n    rv = self.json.response(rv)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\", line 214, in response\n    f\"{self.dumps(obj, **dump_args)}\\n\", mimetype=self.mimetype\n       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\", line 179, in dumps\n    return json.dumps(obj, **kwargs)\n           ~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\json\\__init__.py\", line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\", line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\json\\encoder.py\", line 261, in iterencode\n    return _iterencode(o, 0)\n  File \"E:\\soft\\studysoft\\miniconda\\Lib\\site-packages\\flask\\json\\provider.py\", line 121, in _default\n    raise TypeError(f\"Object of type {type(o).__name__} is not JSON serializable\")\nTypeError: Object of type bytes is not JSON serializable\n\n\n-->\n",
+                        "responseId": 755656142,
+                        "description": "",
+                        "oasKey": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "mediaType": "",
+                      "examples": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 40,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [
+                      "BLANK.755656142"
+                    ],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "更新传感器数据接口",
+                  "api": {
+                    "id": "342304504",
+                    "method": "put",
+                    "path": "http://223.247.96.246:30006/api/r60abd1/update/1",
+                    "parameters": {
+                      "header": [
+                        {
+                          "name": "Content-Type",
+                          "required": true,
+                          "example": "application/json",
+                          "description": "",
+                          "id": "1fYLwmlkRQ",
+                          "type": "string",
+                          "enable": true
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "755643530",
+                        "code": 200,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "integer"
+                            },
+                            "message": {
+                              "type": "string"
+                            },
+                            "success": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "success"
+                          ]
+                        },
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [
+                      {
+                        "name": "成功示例",
+                        "data": "{\n  \"code\": 0,\n  \"message\": \"\\u6570\\u636e\\u66f4\\u65b0\\u6210\\u529f\",\n  \"success\": true\n}\n",
+                        "responseId": 755643530,
+                        "description": "",
+                        "oasKey": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "string"
+                          },
+                          "presence": {
+                            "type": "integer"
+                          },
+                          "movement": {
+                            "type": "integer"
+                          },
+                          "distance": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "timestamp",
+                          "presence",
+                          "movement",
+                          "distance"
+                        ]
+                      },
+                      "mediaType": "",
+                      "examples": [
+                        {
+                          "mediaType": "application/json",
+                          "value": "{\"timestamp\": \"2025-08-28 10:45:00.456\", \"presence\": 1, \"movement\": 1, \"distance\": 160}",
+                          "name": "示例"
+                        }
+                      ],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 50,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [
+                      "BLANK.755643530"
+                    ],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "删除传感器数据接口",
+                  "api": {
+                    "id": "342304742",
+                    "method": "delete",
+                    "path": "http://223.247.96.246:30006/api/r60abd1/delete/1",
+                    "parameters": {},
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "755668847",
+                        "code": 200,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "integer"
+                            },
+                            "message": {
+                              "type": "string"
+                            },
+                            "success": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "message",
+                            "success"
+                          ]
+                        },
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [
+                      {
+                        "name": "成功示例",
+                        "data": "{\n  \"code\": 0,\n  \"message\": \"\\u6570\\u636e\\u5220\\u9664\\u6210\\u529f\",\n  \"success\": true\n}\n",
+                        "responseId": 755668847,
+                        "description": "",
+                        "oasKey": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "mediaType": "",
+                      "examples": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 20,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [
+                      "BLANK.755668847"
+                    ],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "根据时间范围获取传感器数据接口",
+                  "api": {
+                    "id": "342305705",
+                    "method": "get",
+                    "path": "http://223.247.96.246:30006/api/r60abd1/get_by_time_range",
+                    "parameters": {
+                      "query": [
+                        {
+                          "name": "start_time",
+                          "required": true,
+                          "example": "2025-08-28%2010:00:00",
+                          "description": "",
+                          "id": "cmxWERNlfU",
+                          "type": "string",
+                          "enable": true
+                        },
+                        {
+                          "name": "end_time",
+                          "required": true,
+                          "example": "2025-08-28%2011:00:00",
+                          "description": "",
+                          "id": "x1OTWnABn0",
+                          "type": "string",
+                          "enable": true
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "755661741",
+                        "code": 200,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "integer"
+                            },
+                            "data_list": {
+                              "type": "array",
+                              "items": {}
+                            },
+                            "message": {
+                              "type": "string"
+                            },
+                            "success": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "data_list",
+                            "message",
+                            "success"
+                          ]
+                        },
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [
+                      {
+                        "name": "成功示例",
+                        "data": "{\n  \"code\": 0,\n  \"data_list\": [],\n  \"message\": \"\\u83b7\\u53d6\\u6210\\u529f\",\n  \"success\": true\n}\n",
+                        "responseId": 755661741,
+                        "description": "",
+                        "oasKey": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "mediaType": "",
+                      "examples": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 20,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [
+                      "BLANK.755661741"
+                    ],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "上传录制的视频接口",
+                  "api": {
+                    "id": "354654067",
+                    "method": "get",
+                    "path": "http://223.247.96.246:30001/vlm_api/upload",
+                    "parameters": {},
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": []
+                    },
+                    "responses": [
+                      {
+                        "id": "776501709",
+                        "code": 200,
+                        "name": "成功",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "description": "",
+                        "contentType": "json",
+                        "mediaType": "",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "multipart/form-data",
+                      "parameters": [
+                        {
+                          "required": false,
+                          "description": "",
+                          "type": "file",
+                          "id": "bB0jkYaquV",
+                          "example": "file://E:\\czdemo\\zhjkproject\\longmemory\\G60_EnvAwareness\\servercore\\tools\\face_rec\\face_rec\\人脸\\常征2.png",
+                          "enable": true,
+                          "name": "file",
+                          "schema": {
+                            "format": "binary",
+                            "type": "string"
+                          }
+                        },
+                        {
+                          "required": false,
+                          "description": "",
+                          "type": "string",
+                          "id": "YIu21sR92Y",
+                          "example": "24",
+                          "enable": true,
+                          "name": "userid"
+                        }
+                      ],
+                      "mediaType": "",
+                      "examples": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [],
+                    "status": "developing",
+                    "serverId": "",
+                    "operationId": "",
+                    "sourceUrl": "",
+                    "ordering": 97,
+                    "cases": [],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 5342487,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "socketCollection": [],
+  "docCollection": [],
+  "webSocketCollection": [],
+  "socketIOCollection": [],
+  "mcpClientCollection": [],
+  "responseCollection": [],
+  "schemaCollection": [],
+  "securitySchemeCollection": [],
+  "oasComponentCollection": [],
+  "requestCollection": [
+    {
+      "name": "根目录",
+      "children": [],
+      "items": [
+        {
+          "id": 4379018,
+          "createdAt": "2026-01-13T16:18:36.000Z",
+          "updatedAt": "2026-01-13T16:18:38.000Z",
+          "name": "根据用户id获取",
+          "method": "get",
+          "path": "http://223.247.96.246:30006/api/r60abd1/user_device/get_by_user/1",
+          "requestBody": {
+            "type": "none",
+            "parameters": []
+          },
+          "parameters": {},
+          "commonParameters": {
+            "query": [],
+            "body": [],
+            "header": [],
+            "cookie": []
+          },
+          "preProcessors": [],
+          "postProcessors": [],
+          "auth": {},
+          "advancedSettings": {},
+          "folderId": 0,
+          "projectId": 5881529,
+          "creatorId": 1879609,
+          "editorId": 1879609
+        }
+      ]
+    }
+  ],
+  "environments": [],
+  "commonScripts": [],
+  "globalVariables": [],
+  "commonParameters": null,
+  "customFunctions": [],
+  "projectTestCaseCategories": [
+    {
+      "id": 798536,
+      "name": "正向",
+      "description": null
+    },
+    {
+      "id": 798537,
+      "name": "负向",
+      "description": null
+    },
+    {
+      "id": 798538,
+      "name": "边界值",
+      "description": null
+    },
+    {
+      "id": 798539,
+      "name": "安全性",
+      "description": null
+    },
+    {
+      "id": 798540,
+      "name": "其他",
+      "description": null
+    }
+  ],
+  "projectTestCaseTags": [
+    {
+      "id": 3592488,
+      "name": "仅传必要字段",
+      "description": "仅发送具有有效值的必填字段，省略所有可选字段，以测试最小有效请求。"
+    },
+    {
+      "id": 3592489,
+      "name": "语义合法",
+      "description": "使用语法正确且在业务逻辑或域上下文中也有意义的值。"
+    },
+    {
+      "id": 3592490,
+      "name": "覆盖枚举组合",
+      "description": "对所有枚举型参数，应用正交设计系统地构建参数及其枚举值的测试用例组合，专用于测试枚举覆盖率"
+    },
+    {
+      "id": 3592491,
+      "name": "其他正向",
+      "description": "提供符合API规范的真实有效的输入，产生正确和预期的结果。"
+    },
+    {
+      "id": 3592492,
+      "name": "缺失必填字段",
+      "description": "在请求主体或参数中省略一个或多个必需字段。"
+    },
+    {
+      "id": 3592493,
+      "name": "无效值",
+      "description": "提供的值类型和格式正确，但在逻辑上对该字段无效。"
+    },
+    {
+      "id": 3592494,
+      "name": "类型错误",
+      "description": "使用数据类型不正确的值，例如发送字符串而不是整数。"
+    },
+    {
+      "id": 3592495,
+      "name": "格式错误",
+      "description": "以不正确的格式提供值，例如，错误的日期模式，格式错误的电子邮件地址。"
+    },
+    {
+      "id": 3592496,
+      "name": "语义非法",
+      "description": "使用语法正确且格式正确的值，这些值在逻辑上不可能或违反域规则。"
+    },
+    {
+      "id": 3592497,
+      "name": "其他负向",
+      "description": "提供无效或意外的输入，应触发错误处理或拒绝API。"
+    },
+    {
+      "id": 3592498,
+      "name": "Null",
+      "description": "必须是 JSON 字面量 `null`（不是空的，也不是 \"null\"）。"
+    },
+    {
+      "id": 3592499,
+      "name": "零值",
+      "description": "必须是数字字面值0。"
+    },
+    {
+      "id": 3592500,
+      "name": "空值",
+      "description": "必须是\"\"。"
+    },
+    {
+      "id": 3592501,
+      "name": "极大值",
+      "description": "Max/min值 - 为数字或日期字段提供精确的最小值和最大值。"
+    },
+    {
+      "id": 3592502,
+      "name": "极小值",
+      "description": "Max/min值 - 为数字或日期字段提供精确的最小值和最大值。"
+    },
+    {
+      "id": 3592503,
+      "name": "超出最大边界值",
+      "description": "过长/过短字符串 - 提供超出允许的最小或最大边界的值。"
+    },
+    {
+      "id": 3592504,
+      "name": "超出最小边界值",
+      "description": "过长/过短字符串 - 提供超出允许的最小或最大边界的值。"
+    },
+    {
+      "id": 3592505,
+      "name": "字符串过长",
+      "description": "超出范围的值 - 提供大于允许的最大长度或小于要求的最小长度的字符串。"
+    },
+    {
+      "id": 3592506,
+      "name": "字符串过短",
+      "description": "超出范围的值 - 提供大于允许的最大长度或小于要求的最小长度的字符串。"
+    },
+    {
+      "id": 3592507,
+      "name": "对象级别授权缺失",
+      "description": "对象级别授权缺失 - 用户在没有适当授权的情况下访问或操作数据对象。"
+    },
+    {
+      "id": 3592508,
+      "name": "访问控制",
+      "description": "基于角色、权限或属性来限制用户能访问哪些资源、能执行哪些操作"
+    },
+    {
+      "id": 3592509,
+      "name": "认证失败",
+      "description": "认证失败 - 认证薄弱、配置错误或被绕过，导致未授权访问。"
+    },
+    {
+      "id": 3592510,
+      "name": "SQL注入",
+      "description": "在输入字段中插入恶意SQL代码，测试是否存在SQL注入漏洞。"
+    },
+    {
+      "id": 3592511,
+      "name": "XSS注入",
+      "description": "注入JavaScript或HTML标签来测试跨站点脚本漏洞。"
+    },
+    {
+      "id": 3592512,
+      "name": "模糊输入",
+      "description": "发送大型或随机生成的有效载荷，以测试输入的有效性和稳定性。"
+    },
+    {
+      "id": 3592513,
+      "name": "命令行注入",
+      "description": "将shell命令插入输入以测试命令执行漏洞。"
+    },
+    {
+      "id": 3592514,
+      "name": "JSON注入",
+      "description": "插入恶意或意外的JSON结构来测试解析和验证。"
+    },
+    {
+      "id": 3592515,
+      "name": "NoSQL注入",
+      "description": "提供NoSQL特定的恶意查询或操作符来测试注入漏洞。"
+    },
+    {
+      "id": 3592516,
+      "name": "其他",
+      "description": "其他未归属的测试用例。"
+    }
+  ],
+  "projectAssociations": [],
+  "moduleSettings": [
+    {
+      "id": "5342487",
+      "name": "默认模块",
+      "description": "",
+      "moduleVariables": [],
+      "openApiInfo": {}
+    }
+  ]
+}
