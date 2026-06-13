@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(cd /d \"D:\\\\DeepBlue\\\\AIProjects\\\\baby_bed_server\")",
-      "Bash(python -c ' *)",
-      "Bash(python -c \"import pandas as pd; df = pd.read_excel\\('D:/DeepBlue/AIProjects/baby_bed_server/GUIDE/API接口清单_v2.xlsx', sheet_name=None\\); [print\\(f'=== Sheet: {name} ===\\\\nColumns: {list\\(sheet.columns\\)}\\\\nRows: {len\\(sheet\\)}\\\\n{sheet.head\\(10\\).to_string\\(\\)}\\\\n'\\) for name, sheet in df.items\\(\\)]\")"
-    ]
-  }
-}
