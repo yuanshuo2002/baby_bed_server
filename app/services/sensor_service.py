@@ -161,11 +161,14 @@ class SensorService:
 
     @staticmethod
     async def _classify_status(sensor_data: SensorDataRaw) -> tuple[str, int]:
-        """基于传感器数据分类五类状态，返回(状态类型, 状态级别)"""
+        """基于毫米波传感器数据分类五类状态，返回(状态类型, 状态级别)
+
+        注意：本方法只使用毫米波数据（呼吸、心率、体动、距离等），不依赖 sound_db
+        """
         breath_rate = float(sensor_data.breath_rate) if sensor_data.breath_rate else 0
         heart_rate = float(sensor_data.heart_rate) if sensor_data.heart_rate else 0
         body_movement = float(sensor_data.body_movement) if sensor_data.body_movement else 0
-        sound_db = float(sensor_data.sound_db) if sensor_data.sound_db else 0
+        distance_cm = float(sensor_data.distance_cm) if sensor_data.distance_cm else 0
         pose_status = sensor_data.pose_status or ""
         height_cm = float(sensor_data.height_cm) if sensor_data.height_cm else 0
         body_offset = float(sensor_data.body_offset_cm) if sensor_data.body_offset_cm else 0
@@ -178,20 +181,21 @@ class SensorService:
         if body_offset > 35:
             return ("danger", 1)
 
-        # 哭闹状态检测
-        if sound_db > 60 and heart_rate > 140:
+        # 哭闹状态检测（基于心率和体动）
+        # 哭闹时心率会明显升高，体动也会增加
+        if heart_rate > 160:
             return ("crying", 3)
-        if sound_db > 55 and heart_rate > 130:
+        if heart_rate > 140:
             return ("crying", 2)
-        if sound_db > 50:
+        if heart_rate > 120 and body_movement > 1.0:
             return ("crying", 1)
 
-        # 高兴玩耍检测
-        if body_movement > 2.0 and sound_db > 45:
+        # 高兴玩耍检测（较高体动，无哭闹特征）
+        if body_movement > 2.5 and heart_rate < 120:
             return ("playing", 0)
 
-        # 苏醒状态检测
-        if body_movement > 0.3 and sound_db > 30:
+        # 苏醒状态检测（有体动但心率正常）
+        if body_movement > 0.5 and heart_rate < 110:
             return ("awake", 0)
 
         # 默认熟睡状态
@@ -265,7 +269,7 @@ class SensorService:
                 "breath_rate": float(sensor_data.breath_rate) if sensor_data.breath_rate else None,
                 "heart_rate": float(sensor_data.heart_rate) if sensor_data.heart_rate else None,
                 "body_movement": float(sensor_data.body_movement) if sensor_data.body_movement else None,
-                "sound_db": float(sensor_data.sound_db) if sensor_data.sound_db else None,
+                "distance_cm": float(sensor_data.distance_cm) if sensor_data.distance_cm else None,
                 "pose_status": sensor_data.pose_status,
                 "expression": sensor_data.expression,
             },

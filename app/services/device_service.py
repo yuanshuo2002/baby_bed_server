@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 from sqlalchemy import select, desc, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.exceptions import NotFoundException, ConflictException, ForbiddenException
-from app.models.device import Device
+from app.core.exceptions import NotFoundException, ConflictException, ForbiddenException, BusinessException
+from app.models.device import Device, VALID_WORK_MODES
 from app.models.device_mode import DeviceModeSwitch
 from app.services.family_service import FamilyService
 
@@ -149,7 +149,14 @@ class DeviceService:
         db: AsyncSession, user_id: int, device_sn: str,
         target_mode: str, switch_type: str = "manual", switch_reason: str | None = None,
     ) -> dict:
-        """切换设备模式"""
+        """切换设备模式
+
+        Args:
+            target_mode: 目标模式，可选值: sleep, play, co_sleep
+        """
+        if target_mode not in VALID_WORK_MODES:
+            raise BusinessException(f"无效的工作模式: {target_mode}, 可选值: {list(VALID_WORK_MODES)}")
+
         device = await DeviceService._get_family_device(db, user_id, device_sn)
 
         from_mode = device.work_mode

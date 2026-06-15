@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 
 class SensorDataUpload(BaseModel):
-    """传感器数据上传请求"""
+    """传感器数据上传请求（毫米波数据）"""
     device_sn: str = Field(..., description="设备序列号")
     baby_id: int | None = Field(None, description="宝宝ID（可选，未传时自动通过device_sn查询）")
     collected_at: datetime = Field(..., description="采集时间")
@@ -15,8 +15,6 @@ class SensorDataUpload(BaseModel):
     heart_rate: Decimal | None = Field(None, description="心率")
     body_movement: Decimal | None = Field(None, description="体动活跃度")
     distance_cm: Decimal | None = Field(None, description="雷达测距")
-    sound_db: Decimal | None = Field(None, description="环境分贝")
-    sound_type: str | None = Field(None, description="声音分类")
     pose_status: str | None = Field(None, description="姿态状态")
     face_detected: int | None = Field(None, description="是否检测到面部")
     expression: str | None = Field(None, description="表情分类")
@@ -25,7 +23,6 @@ class SensorDataUpload(BaseModel):
     height_cm: Decimal | None = Field(None, description="头部高度")
     room_temp: Decimal | None = Field(None, description="室温")
     humidity: Decimal | None = Field(None, description="湿度")
-    noise_db: Decimal | None = Field(None, description="环境噪声")
 
 
 class SensorDataInfo(BaseModel):
@@ -38,8 +35,6 @@ class SensorDataInfo(BaseModel):
     heart_rate: Decimal | None = None
     body_movement: Decimal | None = None
     distance_cm: Decimal | None = None
-    sound_db: Decimal | None = None
-    sound_type: str | None = None
     pose_status: str | None = None
     face_detected: int | None = None
     expression: str | None = None
@@ -48,7 +43,6 @@ class SensorDataInfo(BaseModel):
     height_cm: Decimal | None = None
     room_temp: Decimal | None = None
     humidity: Decimal | None = None
-    noise_db: Decimal | None = None
 
     model_config = {"from_attributes": True}
 

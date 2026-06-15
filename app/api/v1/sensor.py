@@ -46,10 +46,9 @@ async def upload_sensor_data(
     result = await sensor_service.upload_sensor_data(
         db, device_sn=body.device_sn, baby_id=baby_id, collected_at=body.collected_at,
         breath_rate=body.breath_rate, heart_rate=body.heart_rate, body_movement=body.body_movement,
-        distance_cm=body.distance_cm, sound_db=body.sound_db, sound_type=body.sound_type,
-        pose_status=body.pose_status, face_detected=body.face_detected, expression=body.expression,
-        body_offset_cm=body.body_offset_cm, roll_angle=body.roll_angle, height_cm=body.height_cm,
-        room_temp=body.room_temp, humidity=body.humidity, noise_db=body.noise_db,
+        distance_cm=body.distance_cm, pose_status=body.pose_status, face_detected=body.face_detected,
+        expression=body.expression, body_offset_cm=body.body_offset_cm, roll_angle=body.roll_angle,
+        height_cm=body.height_cm, room_temp=body.room_temp, humidity=body.humidity,
     )
     return success(data=result, message="数据上传成功")
 
