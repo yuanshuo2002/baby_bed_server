@@ -572,5 +572,40 @@ class SensorService:
             "message": f"已执行{scene_type}场景响应",
         }
 
+    # ========== 数据清理定时任务 ==========
+    @staticmethod
+    async def cleanup_old_sensor_data(db: AsyncSession, retention_days: int = 7) -> dict:
+        """清理过期的传感器原始数据
+
+        Args:
+            retention_days: 数据保留天数，默认 7 天
+
+        Returns:
+            清理结果统计
+        """
+        from datetime import timedelta
+        from sqlalchemy import delete
+
+        cutoff_time = datetime.now() - timedelta(days=retention_days)
+
+        # 统计即将删除的数据量
+        count_result = await db.execute(
+            select(func.count(SensorDataRaw.id)).where(SensorDataRaw.collected_at < cutoff_time)
+        )
+        delete_count = count_result.scalar() or 0
+
+        if delete_count > 0:
+            # 执行删除
+            await db.execute(
+                delete(SensorDataRaw).where(SensorDataRaw.collected_at < cutoff_time)
+            )
+            await db.flush()
+
+        return {
+            "deleted_count": delete_count,
+            "retention_days": retention_days,
+            "cutoff_time": cutoff_time.isoformat(),
+        }
+
 
 sensor_service = SensorService()

@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from app.core.exceptions import BusinessException
 from app.api.v1.router import api_router
 from app.services.device_service import DeviceService
+from app.services.sensor_service import SensorService
 from app.database import AsyncSessionLocal
 from config import settings
 
@@ -29,6 +30,22 @@ async def cleanup_offline_devices_task():
         await asyncio.sleep(60)  # 每60秒执行一次
 
 
+async def cleanup_sensor_data_task():
+    """后台定时任务：清理过期的传感器原始数据
+    硬件端每几秒上传一条数据，数据量增长很快
+    默认保留最近7天数据，每小时执行一次
+    """
+    while True:
+        try:
+            async with AsyncSessionLocal() as db:
+                result = await SensorService.cleanup_old_sensor_data(db, retention_days=7)
+                if result["deleted_count"] > 0:
+                    print(f"[定时任务] 清理了 {result['deleted_count']} 条过期传感器数据 (保留{result['retention_days']}天)")
+        except Exception as e:
+            print(f"[定时任务] 清理传感器数据失败: {e}")
+        await asyncio.sleep(3600)  # 每小时执行一次
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
@@ -40,15 +57,19 @@ async def lifespan(app: FastAPI):
     print(f"[启动] 数据库: {settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
 
     # 启动后台定时任务
-    cleanup_task = asyncio.create_task(cleanup_offline_devices_task())
+    cleanup_device_task = asyncio.create_task(cleanup_offline_devices_task())
+    cleanup_sensor_task = asyncio.create_task(cleanup_sensor_data_task())
     print("[启动] 离线设备清理任务已启动")
+    print("[启动] 传感器数据清理任务已启动（每小时执行）")
 
     yield
 
     # 关闭时执行
-    cleanup_task.cancel()
+    cleanup_device_task.cancel()
+    cleanup_sensor_task.cancel()
     try:
-        await cleanup_task
+        await cleanup_device_task
+        await cleanup_sensor_task
     except asyncio.CancelledError:
         pass
     print("[关闭] 应用正在关闭...")
