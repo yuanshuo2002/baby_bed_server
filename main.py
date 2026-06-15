@@ -38,7 +38,7 @@ async def cleanup_sensor_data_task():
     while True:
         try:
             async with AsyncSessionLocal() as db:
-                result = await SensorService.cleanup_old_sensor_data(db, retention_days=7)
+                result = await SensorService.cleanup_old_sensor_data(db, retention_days=15)
                 if result["deleted_count"] > 0:
                     print(f"[定时任务] 清理了 {result['deleted_count']} 条过期传感器数据 (保留{result['retention_days']}天)")
         except Exception as e:
