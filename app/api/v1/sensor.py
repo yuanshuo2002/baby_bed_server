@@ -50,6 +50,8 @@ async def upload_sensor_data(
         expression=body.expression, body_offset_cm=body.body_offset_cm, roll_angle=body.roll_angle,
         height_cm=body.height_cm, room_temp=body.room_temp, humidity=body.humidity,
     )
+    if not result.get("success", True):
+        return success(data=result, message=result.get("message", "传感器数据上传失败"))
     return success(data=result, message="数据上传成功")
 
 

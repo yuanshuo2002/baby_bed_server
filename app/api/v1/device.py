@@ -14,7 +14,7 @@ from app.api.deps import get_current_user, get_db_session
 from app.core.response import success
 from app.models.user import User
 from app.schemas.base import ApiResponse
-from app.schemas.device import DeviceRegister, DeviceBind, DeviceModeSwitch, ThemeConfig, ThemeConfigResponse, UpdateDeviceName
+from app.schemas.device import DeviceRegister, DeviceBind, DeviceBindBaby, DeviceModeSwitch, ThemeConfig, ThemeConfigResponse, UpdateDeviceName
 from app.services.device_service import device_service
 
 router = APIRouter(prefix="/device", tags=["设备管理"])
@@ -37,15 +37,26 @@ async def register_device(
 # ==================== 共用接口（硬件和小程序均可用） ====================
 
 
-@router.post("/bind", response_model=ApiResponse, summary="绑定设备到宝宝 [共用接口]")
+@router.post("/bind", response_model=ApiResponse, summary="绑定设备到家庭 [共用接口]")
 async def bind_device(
     body: DeviceBind,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session),
 ):
-    """将设备绑定到指定宝宝"""
+    """将设备绑定到家庭（baby_id可选）"""
     result = await device_service.bind_device(db, user_id=current_user.id, device_sn=body.device_sn, baby_id=body.baby_id)
     return success(data=result, message="设备绑定成功")
+
+
+@router.post("/bind/baby", response_model=ApiResponse, summary="将宝宝绑定到设备 [共用接口]")
+async def bind_baby_to_device(
+    body: DeviceBindBaby,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db_session),
+):
+    """将宝宝绑定到已归属家庭的设备"""
+    result = await device_service.bind_baby_to_device(db, user_id=current_user.id, device_sn=body.device_sn, baby_id=body.baby_id)
+    return success(data=result, message="宝宝绑定成功")
 
 
 @router.post("/unbind", response_model=ApiResponse, summary="解绑设备 [共用接口]")

@@ -25,7 +25,8 @@ class Device(Base):
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     device_sn: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
-    baby_id: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
+    family_id: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True, index=True)
+    baby_id: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True, index=True)
     device_name: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     device_model: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     firmware_version: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)

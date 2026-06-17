@@ -13,7 +13,13 @@ class DeviceRegister(BaseModel):
 
 
 class DeviceBind(BaseModel):
-    """设备绑定请求"""
+    """设备绑定请求（baby_id可选）"""
+    device_sn: str = Field(..., description="设备序列号")
+    baby_id: int | None = Field(None, description="绑定的宝宝ID（可选，后续可在宝宝管理中添加）")
+
+
+class DeviceBindBaby(BaseModel):
+    """设备绑定宝宝请求"""
     device_sn: str = Field(..., description="设备序列号")
     baby_id: int = Field(..., description="绑定的宝宝ID")
 

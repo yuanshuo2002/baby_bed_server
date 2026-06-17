@@ -16,12 +16,11 @@ class DeviceService:
 
     @staticmethod
     async def _get_family_device(db: AsyncSession, user_id: int, device_sn: str) -> Device:
-        """获取属于用户家庭的设备（内部方法，保持原有逻辑）"""
+        """获取属于用户家庭的设备（内部方法）"""
         family = await FamilyService._get_user_family_obj(db, user_id)
-        from app.models.baby import Baby
         result = await db.execute(
-            select(Device).join(Baby, Device.baby_id == Baby.id).where(
-                Device.device_sn == device_sn, Baby.family_id == family.id,
+            select(Device).where(
+                Device.device_sn == device_sn, Device.family_id == family.id,
             )
         )
         device = result.scalar_one_or_none()
@@ -31,10 +30,10 @@ class DeviceService:
 
     @staticmethod
     async def _get_device_for_user(db: AsyncSession, user_id: int, device_sn: str) -> Device:
-        """获取设备，支持未绑定设备查看状态
+        """获取属于用户家庭的设备
         - 设备不存在 → NotFoundException
-        - baby_id为null → 直接返回（未绑定设备不校验家庭）
-        - baby_id不为null → 校验设备是否属于用户家庭
+        - 设备未绑定到家庭 → ForbiddenException
+        - 设备不属于用户家庭 → ForbiddenException
         """
         result = await db.execute(select(Device).where(Device.device_sn == device_sn))
         device = result.scalar_one_or_none()
@@ -42,20 +41,11 @@ class DeviceService:
         if not device:
             raise NotFoundException("设备不存在")
 
-        # 未绑定设备(baby_id为null)，直接返回不做家庭校验
-        if device.baby_id is None:
-            return device
+        if device.family_id is None:
+            raise ForbiddenException("设备未绑定到任何家庭")
 
-        # 已绑定设备，校验家庭归属
         family = await FamilyService._get_user_family_obj(db, user_id)
-        from app.models.baby import Baby
-        result = await db.execute(
-            select(Device).join(Baby, Device.baby_id == Baby.id).where(
-                Device.device_sn == device_sn, Baby.family_id == family.id,
-            )
-        )
-        device = result.scalar_one_or_none()
-        if not device:
+        if device.family_id != family.id:
             raise ForbiddenException("设备不属于当前家庭")
         return device
 
@@ -73,23 +63,47 @@ class DeviceService:
         return {"id": device.id, "device_sn": device.device_sn, "device_name": device.device_name}
 
     @staticmethod
-    async def bind_device(db: AsyncSession, user_id: int, device_sn: str, baby_id: int) -> dict:
-        """绑定设备到宝宝"""
+    async def bind_device(db: AsyncSession, user_id: int, device_sn: str, baby_id: int | None = None) -> dict:
+        """绑定设备到家庭（baby_id可选）"""
         result = await db.execute(select(Device).where(Device.device_sn == device_sn))
         device = result.scalar_one_or_none()
+
+        # 设备未注册：先注册设备
         if not device:
-            raise NotFoundException("设备不存在")
+            device = Device(device_sn=device_sn, device_name=None, device_model=None)
+            db.add(device)
+            await db.flush()
+
         family = await FamilyService._get_user_family_obj(db, user_id)
+
+        # 设备已绑定到其他家庭
+        if device.family_id is not None and device.family_id != family.id:
+            raise ForbiddenException("设备已被其他家庭绑定")
+
+        # 如果提供了 baby_id，验证宝宝属于当前家庭
+        if baby_id is not None:
+            from app.models.baby import Baby
+            baby = await db.execute(select(Baby).where(Baby.id == baby_id, Baby.family_id == family.id))
+            if not baby.scalar_one_or_none():
+                raise ForbiddenException("宝宝不属于当前家庭")
+            device.baby_id = baby_id
+
+        device.family_id = family.id
+        device.last_online_at = datetime.now()
+        return {"device_sn": device_sn, "baby_id": device.baby_id, "message": "绑定成功"}
+
+    @staticmethod
+    async def bind_baby_to_device(db: AsyncSession, user_id: int, device_sn: str, baby_id: int) -> dict:
+        """将宝宝绑定到已归属家庭的设备"""
+        device = await DeviceService._get_family_device(db, user_id, device_sn)
         from app.models.baby import Baby
-        baby = await db.execute(select(Baby).where(Baby.id == baby_id, Baby.family_id == family.id))
-        if not baby.scalar_one_or_none():
+        baby = await db.execute(select(Baby).where(Baby.id == baby_id, Baby.family_id == device.family_id))
+        baby_obj = baby.scalar_one_or_none()
+        if not baby_obj:
             raise ForbiddenException("宝宝不属于当前家庭")
-        if device.baby_id is not None:
-            await DeviceService._get_family_device(db, user_id, device_sn)
 
         device.baby_id = baby_id
-        device.last_online_at = datetime.now()
-        return {"device_sn": device_sn, "baby_id": baby_id, "message": "绑定成功"}
+        return {"device_sn": device_sn, "baby_id": baby_id, "message": "宝宝绑定成功"}
 
     @staticmethod
     async def unbind_device(db: AsyncSession, user_id: int, device_sn: str) -> dict:
@@ -101,21 +115,13 @@ class DeviceService:
 
     @staticmethod
     async def get_device_list(db: AsyncSession, user_id: int) -> list[dict]:
-        """获取设备列表（包含已解绑的设备）"""
+        """获取设备列表（返回当前家庭下的所有设备）"""
         family = await FamilyService._get_user_family_obj(db, user_id)
-        from app.models.baby import Baby
-        # 获取家庭下所有宝宝ID
-        result = await db.execute(select(Baby.id).where(Baby.family_id == family.id))
-        baby_ids = [row[0] for row in result.all()]
 
-        # 查询设备：关联到家庭宝宝的所有设备，或已解绑（baby_id=None）的设备
-        if baby_ids:
-            result = await db.execute(
-                select(Device).where((Device.baby_id.in_(baby_ids)) | (Device.baby_id.is_(None)))
-            )
-        else:
-            # 如果没有宝宝，返回已解绑的设备
-            result = await db.execute(select(Device).where(Device.baby_id.is_(None)))
+        # 查询设备：基于 family_id 查询
+        result = await db.execute(
+            select(Device).where(Device.family_id == family.id)
+        )
         devices = result.scalars().all()
         return [
             {

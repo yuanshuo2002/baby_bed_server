@@ -53,8 +53,15 @@ class SensorService:
     }
 
     @staticmethod
-    async def upload_sensor_data(db: AsyncSession, device_sn: str, baby_id: int, **kwargs) -> dict:
+    async def upload_sensor_data(db: AsyncSession, device_sn: str, baby_id: int | None, **kwargs) -> dict:
         """上传传感器数据"""
+        # 如果未传 baby_id，尝试通过 device_sn 查询
+        if baby_id is None:
+            baby_id = await SensorService._get_baby_id(db, device_sn)
+
+        if not baby_id:
+            return {"success": False, "message": "设备未绑定宝宝，无法上传传感器数据"}
+
         data = SensorDataRaw(device_sn=device_sn, baby_id=baby_id, **kwargs)
         db.add(data)
         await db.flush()
@@ -63,7 +70,7 @@ class SensorService:
         from app.services.device_service import DeviceService
         await DeviceService.update_device_online_status(db, device_sn)
 
-        return {"id": data.id, "message": "数据上传成功"}
+        return {"success": True, "id": data.id, "message": "数据上传成功"}
 
     @staticmethod
     async def upload_status(db: AsyncSession, device_sn: str, baby_id: int | None, status_type: str, status_level: int, started_at: datetime, breath_rate: float | None = None, heart_rate: float | None = None, pose_status: str | None = None, expression: str | None = None) -> dict:

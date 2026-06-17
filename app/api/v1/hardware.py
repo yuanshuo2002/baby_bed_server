@@ -74,15 +74,12 @@ async def device_heartbeat(
         device.work_mode = work_mode
 
     # 查询绑定状态
-    baby_id = device.baby_id
-    family_id = None
-    is_bound = baby_id is not None
+    # 设备绑定到 family 表示已绑定（baby_id 可选）
+    family_id = device.family_id
+    is_bound = family_id is not None
 
-    if baby_id:
-        result = await db.execute(select(Baby).where(Baby.id == baby_id))
-        baby = result.scalar_one_or_none()
-        if baby:
-            family_id = baby.family_id
+    # 兼容旧逻辑：如果有 baby_id 则返回
+    baby_id = device.baby_id
 
     return success(data={
         "device_sn": device_sn,
