@@ -13,7 +13,7 @@
 ## 项目结构
 
 ```
-baby_bed_server/
+baby_bed_server2/
 ├── app/
 │   ├── api/
 │   │   └── v1/           # API v1 路由
@@ -42,7 +42,8 @@ baby_bed_server/
 ├── tests/               # 单元测试
 ├── main.py              # 应用入口
 ├── config.py            # 配置管理
-└── requirements.txt    # 依赖列表
+├── requirements.txt    # 依赖列表
+└── .python-version     # uv/Python 版本锁定
 ```
 
 ## API 概览
@@ -75,7 +76,16 @@ baby_bed_server/
 ### 1. 安装依赖
 
 ```bash
-pip install -r requirements.txt
+# 安装 uv（如果还没有）
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
+
+# 创建并激活独立环境
+uv venv --python 3.11.13 .venv
+source .venv/bin/activate
+
+# 安装依赖
+uv pip install -r requirements.txt
 ```
 
 ### 2. 配置环境变量
@@ -100,19 +110,21 @@ REDIS_PORT=6379
 
 # 外部 API
 LLM_API_URL=https://api.example.com/llm
-TTS_API_URL=https://api.example.com/tts
-ASR_API_URL=https://api.example.com/asr
+TTS_API_URL=http://127.0.0.1:40028/tts
+ASR_API_URL=http://127.0.0.1:40021/asr
 ```
 
 ### 3. 运行服务
 
 **开发模式：**
 ```bash
+source .venv/bin/activate
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 **生产模式（Gunicorn）：**
 ```bash
+source .venv/bin/activate
 gunicorn -c gunicorn_conf.py main:app
 ```
 
@@ -167,6 +179,14 @@ uwsgi --ini uwsgi.ini
 - 语音克隆
 - ASR/TTS 集成
 - 对话管理
+
+### 视频回填
+
+如果历史视频记录的 `img_url` 为空，可以在项目根目录执行：
+
+```bash
+uv run python scripts/backfill_video_covers.py
+```
 
 ## 测试
 

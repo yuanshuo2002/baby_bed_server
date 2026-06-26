@@ -18,9 +18,11 @@ Baby Bed Server is a FastAPI backend service for a smart baby bed IoT system. It
 
 ```bash
 # Development (auto-reload)
+source .venv/bin/activate
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 # Production with gunicorn
+source .venv/bin/activate
 gunicorn -c gunicorn_conf.py main:app
 
 # Production with uwsgi

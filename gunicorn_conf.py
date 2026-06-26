@@ -1,5 +1,5 @@
 # 项目目录
-chdir = '/www/wwwroot/baby_bed_server'
+chdir = '/www/wwwroot/baby_bed_server2'
 
 # 指定进程数
 workers = 4
@@ -14,14 +14,14 @@ user = 'www'
 worker_class = 'uvicorn.workers.UvicornWorker'
 
 # 绑定的ip与端口
-bind = '0.0.0.0:8123'
+bind = '0.0.0.0:34223'
 
 # 设置进程文件目录（用于停止服务和重启服务，请勿删除）
-pidfile = '/www/wwwroot/baby_bed_server/gunicorn.pid'
+pidfile = '/tmp/baby_bed_server2.pid'
 
 # 设置访问日志和错误信息日志路径
-accesslog = '/www/wwwlogs/python/baby_bed_server/gunicorn_acess.log'
-errorlog = '/www/wwwlogs/python/baby_bed_server/gunicorn_error.log'
+accesslog = '/tmp/baby_bed_server2_gunicorn_access.log'
+errorlog = '/tmp/baby_bed_server2_gunicorn_error.log'
 
 # 日志级别，这个日志级别指的是错误日志的级别，而访问日志的级别无法设置
 # debug:调试级别，记录的信息最多；
