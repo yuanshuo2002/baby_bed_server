@@ -278,18 +278,19 @@ async def text_to_speech(
     baby_id: int | None = Form(None, description="宝宝ID"),
     text: str | None = Form(None, description="待合成文本"),
     voice_id: str | None = Form(None, description="音色ID（可选，不传则使用默认音色）"),
+    voice_role: str | None = Form(None, description="音色角色（可选，不传则使用默认音色）"),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db_session),
 ):
     """将文本转换为语音，使用克隆的音色
     - 如果传入 voice_id，使用指定的音色
+    - 如果传入 voice_role，优先按角色匹配家庭音色
     - 如果不传 voice_id，使用当前默认音色
     """
     resolved_baby_id = baby_id if baby_id is not None else (body.baby_id if body else None)
     resolved_text = text if text is not None else (body.text if body else None)
     resolved_voice_id = voice_id
-    if not resolved_voice_id and body and body.voice_role and ":" in body.voice_role:
-        resolved_voice_id = body.voice_role
+    resolved_voice_role = voice_role if voice_role is not None else (body.voice_role if body else None)
 
     if resolved_baby_id is None or not resolved_text:
         raise BusinessException(code=422, message="baby_id 和 text 不能为空", status_code=422)
@@ -300,6 +301,7 @@ async def text_to_speech(
         baby_id=resolved_baby_id,
         text=resolved_text,
         voice_id=resolved_voice_id,
+        voice_role=resolved_voice_role,
     )
     return success(data=result, message="语音合成成功")
 

@@ -758,31 +758,21 @@ class VoiceService:
         baby_id: int,
         text: str,
         voice_id: str | None = None,
+        voice_role: str | None = None,
     ) -> dict:
         """语音合成（TTS）
         Args:
             voice_id: 音色ID，如果为空则使用当前默认音色
+            voice_role: 音色角色，如果提供则优先按角色匹配音色
         """
         import logging
         logger = logging.getLogger(__name__)
 
+        family = await FamilyService._get_user_family_obj(db, user_id)
+
         # 获取或查找默认音色
-        if not voice_id:
-            family = await FamilyService._get_user_family_obj(db, user_id)
-            result = await db.execute(
-                select(FamilyVoicePreset).where(
-                    FamilyVoicePreset.family_id == family.id,
-                    FamilyVoicePreset.is_default == 1,
-                    FamilyVoicePreset.is_active == 1,
-                )
-            )
-            preset = result.scalar_one_or_none()
-            if not preset:
-                raise NotFoundException('未找到默认音色，请先克隆或选择一个音色')
-            voice_id = preset.voice_id
-        else:
-            # 验证音色存在
-            family = await FamilyService._get_user_family_obj(db, user_id)
+        if voice_id:
+            # 按音色ID精确匹配
             result = await db.execute(
                 select(FamilyVoicePreset).where(
                     FamilyVoicePreset.voice_id == voice_id,
@@ -793,17 +783,67 @@ class VoiceService:
             preset = result.scalar_one_or_none()
             if not preset:
                 raise NotFoundException('音色记录不存在')
+        elif voice_role:
+            # 按角色优先找当前家庭中对应角色的默认音色
+            result = await db.execute(
+                select(FamilyVoicePreset).where(
+                    FamilyVoicePreset.family_id == family.id,
+                    FamilyVoicePreset.voice_role == voice_role,
+                    FamilyVoicePreset.is_active == 1,
+                ).order_by(
+                    FamilyVoicePreset.is_default.desc(),
+                    FamilyVoicePreset.sort_order,
+                    desc(FamilyVoicePreset.created_at),
+                )
+            )
+            preset = result.scalar_one_or_none()
+            if not preset:
+                result = await db.execute(
+                    select(FamilyVoicePreset).where(
+                        FamilyVoicePreset.family_id == family.id,
+                        FamilyVoicePreset.is_default == 1,
+                        FamilyVoicePreset.is_active == 1,
+                    )
+                )
+                preset = result.scalar_one_or_none()
+            if not preset:
+                result = await db.execute(
+                    select(FamilyVoicePreset).where(
+                        FamilyVoicePreset.family_id == family.id,
+                        FamilyVoicePreset.is_active == 1,
+                    ).order_by(
+                        FamilyVoicePreset.sort_order,
+                        desc(FamilyVoicePreset.created_at),
+                    )
+                )
+                preset = result.scalar_one_or_none()
+            if not preset:
+                raise NotFoundException(f'未找到角色 {voice_role} 对应的可用音色，请先克隆或创建音色')
+        else:
+            result = await db.execute(
+                select(FamilyVoicePreset).where(
+                    FamilyVoicePreset.family_id == family.id,
+                    FamilyVoicePreset.is_default == 1,
+                    FamilyVoicePreset.is_active == 1,
+                )
+            )
+            preset = result.scalar_one_or_none()
+            if not preset:
+                raise NotFoundException('未找到默认音色，请先克隆或选择一个音色')
+
+        voice_id = preset.voice_id
+        voice_role = preset.voice_role
 
         # 调用外部TTS API
         try:
             audio_bytes = await VoiceCloneAPIClient.generate_speech(
                 input_text=text,
-                voice=voice_id,
+                speaker=voice_role,
                 response_format="wav",
                 sample_rate=24000,
                 speed=1.0,
             )
-            logger.info(f"TTS success for voice: {voice_id}")
+            logger.info(f"TTS success for voice: {voice_id} / role: {voice_role}")
         except httpx.HTTPStatusError as e:
             logger.error(f"TTS API HTTP error: {e.response.status_code} - {e.response.text}")
             raise ExternalApiException(f"语音合成失败，外部服务返回错误: {e.response.status_code}")
@@ -817,6 +857,7 @@ class VoiceService:
         return {
             'baby_id': baby_id,
             'voice_id': voice_id,
+            'voice_role': voice_role,
             'voice_name': preset.voice_name,
             'audio_data': audio_bytes.hex(),  # 返回十六进制编码的音频数据
             'audio_url': f"data:audio/wav;base64,{base64.b64encode(audio_bytes).decode('utf-8')}",
@@ -907,7 +948,7 @@ class VoiceCloneAPIClient:
     async def generate_speech(
         cls,
         input_text: str,
-        voice: str,
+        speaker: str,
         response_format: str = "wav",
         sample_rate: int = 24000,
         speed: float = 1.0,
@@ -915,7 +956,7 @@ class VoiceCloneAPIClient:
         """调用语音合成接口 POST /v1/audio/generate_speech
         Args:
             input_text: 要转换的文本
-            voice: 音色ID（voice_id）
+            speaker: 音色角色/发音人标识
             response_format: 音频格式（wav/mp3）
             sample_rate: 采样率
             speed: 语速
@@ -927,7 +968,9 @@ class VoiceCloneAPIClient:
                 cls.TTS_API_URL,
                 json={
                     "input": input_text,
-                    "voice": voice,
+                    "speaker": speaker,
+                    "voice_role": speaker,
+                    "voice": speaker,
                     "response_format": response_format,
                     "sample_rate": sample_rate,
                     "stream": False,

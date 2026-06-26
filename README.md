@@ -180,6 +180,32 @@ uwsgi --ini uwsgi.ini
 - ASR/TTS 集成
 - 对话管理
 
+### 本地 TTS 服务（MeloTTS）
+
+如果你要把 TTS 切到本地声线服务，可以单独启动这个微服务：
+
+```bash
+source .venv/bin/activate
+uv run uvicorn app.services.melotts_tts_app:app --host 0.0.0.0 --port 40028
+```
+
+可用环境变量：
+
+```env
+MELOTTS_LANGUAGE=ZH
+MELOTTS_DEVICE=cpu
+MELOTTS_DEFAULT_SPEAKER=ZH
+MELOTTS_SPEAKER_MOM=ZH
+MELOTTS_SPEAKER_DAD=ZH
+MELOTTS_SPEAKER_NANNY=ZH
+MELOTTS_SPEAKER_OTHER=ZH
+MELOTTS_OUTPUT_FORMAT=wav
+MELOTTS_SAMPLE_RATE=24000
+MELOTTS_SPEED=1.0
+```
+
+后端主服务默认会把 TTS 请求转发到 `http://127.0.0.1:40028/tts`，并按家庭音色的 `voice_role` 选择声线。
+
 ### 视频回填
 
 如果历史视频记录的 `img_url` 为空，可以在项目根目录执行：
