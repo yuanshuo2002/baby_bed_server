@@ -206,6 +206,41 @@ MELOTTS_SPEED=1.0
 
 后端主服务默认会把 TTS 请求转发到 `http://127.0.0.1:40028/tts`，并按家庭音色的 `voice_role` 选择声线。
 
+## 三端联调启动顺序
+
+推荐按下面顺序启动，便于排查：
+
+1. 启动 ASR 服务
+
+```bash
+cd /home/simon/voice_services/asr_fast
+CUDA_VISIBLE_DEVICES=4 ASR_DEVICE=cuda ASR_COMPUTE_TYPE=float16 \
+  uv run uvicorn app:app --app-dir /home/simon/voice_services/asr_fast \
+  --host 0.0.0.0 --port 40021
+```
+
+2. 启动本地 TTS 服务
+
+```bash
+uv run uvicorn app.services.melotts_tts_app:app --host 0.0.0.0 --port 40028
+```
+
+3. 启动主后端服务
+
+```bash
+gunicorn -c gunicorn_conf.py main:app
+```
+
+4. 快速检查
+
+```bash
+curl http://127.0.0.1:40021/health
+curl http://127.0.0.1:40028/health
+curl http://127.0.0.1:34223/api/v1/health
+```
+
+如果你想让 TTS 跑在 GPU 上，可以把 `MELOTTS_DEVICE` 改成 `cuda`；如果本机模型还没准备好，先用 `cpu` 也可以联调接口。
+
 ### 视频回填
 
 如果历史视频记录的 `img_url` 为空，可以在项目根目录执行：
