@@ -1,21 +1,30 @@
 """
 语音交互业务逻辑层
 """
+import base64
 import uuid
 import httpx
 from datetime import datetime
 from sqlalchemy import select, desc, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.exceptions import NotFoundException, ExternalApiException
+from app.core.exceptions import NotFoundException, ExternalApiException, BusinessException
 from app.models.voice_clip import ParentVoiceClip
 from app.models.family_voice_preset import FamilyVoicePreset
 from app.models.conversation import ConversationContext
 from app.services.family_service import FamilyService
+from config import settings
 
 
 class VoiceService:
     """语音交互服务"""
+
+    @staticmethod
+    async def _get_active_voice_preset_query_by_family_id(family_id: int):
+        return select(FamilyVoicePreset).where(
+            FamilyVoicePreset.family_id == family_id,
+            FamilyVoicePreset.is_active == 1,
+        )
 
     @staticmethod
     async def clone_voice(db: AsyncSession, user_id: int, baby_id: int, clip_name: str, audio_url: str) -> dict:
@@ -89,8 +98,52 @@ class VoiceService:
         db.add(user_msg)
         await db.flush()
 
-        # TODO: 调用LLM API获取回复
-        reply_text = f"（AI回复占位）收到消息：{message[:20]}..."
+        api_url = settings.VOICE_CHAT_LLM_API_URL or settings.LLM_API_URL
+        api_key = settings.VOICE_CHAT_LLM_API_KEY or settings.LLM_API_KEY
+        model_name = settings.VOICE_CHAT_LLM_MODEL or "gemma4:latest"
+
+        # 调试阶段先给出统一错误，避免前端误把占位回复当成真实模型结果。
+        if not api_url:
+            raise BusinessException(code=503, message="LLM对话服务未配置", status_code=503)
+
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            headers = {"Content-Type": "application/json"}
+            if api_key:
+                headers["Authorization"] = f"Bearer {api_key}"
+
+            payload = {
+                "model": model_name,
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": (
+                            "你是智能婴儿床的语音助手。"
+                            "回答要自然、简洁、贴近家庭照护场景。"
+                            "不确定时明确说明，不要编造事实。"
+                        ),
+                    },
+                    {"role": "user", "content": message},
+                ],
+                "temperature": 0.6,
+                "max_tokens": 512,
+            }
+
+            response = await client.post(
+                api_url,
+                json=payload,
+                headers=headers,
+            )
+            response.raise_for_status()
+            result = response.json()
+
+        reply_text = (
+            result.get("choices", [{}])[0]
+            .get("message", {})
+            .get("content", "")
+            .strip()
+        )
+        if not reply_text:
+            raise ExternalApiException("LLM未返回有效内容")
 
         # 保存AI回复
         assistant_msg = ConversationContext(
@@ -102,7 +155,11 @@ class VoiceService:
         db.add(assistant_msg)
         await db.flush()
 
-        return {"reply": reply_text, "session_id": session_id}
+        return {
+            "reply": reply_text,
+            "content_text": reply_text,
+            "session_id": session_id,
+        }
 
     @staticmethod
     async def get_chat_history(db: AsyncSession, user_id: int, baby_id: int, session_id: str | None = None) -> list[dict]:
@@ -177,6 +234,169 @@ class VoiceService:
         )
 
         # 设置新默认音色
+        preset.is_default = 1
+        await db.flush()
+
+        return {
+            "voice_id": preset.voice_id,
+            "voice_name": preset.voice_name,
+            "voice_role": preset.voice_role,
+            "is_default": True,
+            "message": "音色切换成功",
+        }
+
+    @staticmethod
+    async def get_current_voice(db: AsyncSession, user_id: int, baby_id: int | None = None) -> dict:
+        """获取当前生效音色
+
+        当前版本按家庭默认音色返回。
+        `baby_id` 预留给后续做宝宝级音色策略，不影响当前逻辑。
+        """
+        family = await FamilyService._get_user_family_obj(db, user_id)
+
+        result = await db.execute(
+            select(FamilyVoicePreset).where(
+                FamilyVoicePreset.family_id == family.id,
+                FamilyVoicePreset.is_default == 1,
+                FamilyVoicePreset.is_active == 1,
+            )
+        )
+        preset = result.scalar_one_or_none()
+
+        if not preset:
+            result = await db.execute(
+                select(FamilyVoicePreset).where(
+                    FamilyVoicePreset.family_id == family.id,
+                    FamilyVoicePreset.is_active == 1,
+                ).order_by(
+                    FamilyVoicePreset.sort_order,
+                    desc(FamilyVoicePreset.created_at),
+                )
+            )
+            preset = result.scalar_one_or_none()
+
+        if not preset:
+            raise NotFoundException("当前家庭暂无可用音色，请先克隆或创建音色")
+
+        return {
+            "id": preset.id,
+            "family_id": preset.family_id,
+            "baby_id": baby_id,
+            "voice_id": preset.voice_id,
+            "voice_name": preset.voice_name,
+            "voice_role": preset.voice_role,
+            "audio_url": preset.audio_url,
+            "duration_ms": preset.duration_ms,
+            "similarity_score": float(preset.similarity_score) if preset.similarity_score else None,
+            "is_default": bool(preset.is_default),
+            "is_active": preset.is_active,
+            "sort_order": preset.sort_order,
+            "created_at": preset.created_at.isoformat() if preset.created_at else None,
+            "updated_at": preset.updated_at.isoformat() if preset.updated_at else None,
+        }
+
+    @staticmethod
+    async def get_voice_presets_by_family_id(db: AsyncSession, family_id: int) -> list[dict]:
+        """按家庭查询音色库，供硬件端使用"""
+        query = (
+            select(FamilyVoicePreset)
+            .where(
+                FamilyVoicePreset.family_id == family_id,
+                FamilyVoicePreset.is_active == 1,
+            )
+            .order_by(
+                FamilyVoicePreset.is_default.desc(),
+                FamilyVoicePreset.sort_order,
+                FamilyVoicePreset.created_at.desc(),
+            )
+        )
+        result = await db.execute(query)
+        presets = result.scalars().all()
+        return [
+            {
+                "id": p.id,
+                "family_id": p.family_id,
+                "voice_id": p.voice_id,
+                "voice_role": p.voice_role,
+                "voice_name": p.voice_name,
+                "audio_url": p.audio_url,
+                "duration_ms": p.duration_ms,
+                "similarity_score": float(p.similarity_score) if p.similarity_score else None,
+                "is_default": bool(p.is_default),
+                "is_active": p.is_active,
+                "sort_order": p.sort_order,
+                "created_at": p.created_at.isoformat() if p.created_at else None,
+                "updated_at": p.updated_at.isoformat() if p.updated_at else None,
+            }
+            for p in presets
+        ]
+
+    @staticmethod
+    async def get_current_voice_by_family_id(
+        db: AsyncSession,
+        family_id: int,
+        baby_id: int | None = None,
+    ) -> dict:
+        """按家庭查询当前生效音色，供硬件端使用"""
+        result = await db.execute(
+            select(FamilyVoicePreset).where(
+                FamilyVoicePreset.family_id == family_id,
+                FamilyVoicePreset.is_default == 1,
+                FamilyVoicePreset.is_active == 1,
+            )
+        )
+        preset = result.scalar_one_or_none()
+
+        if not preset:
+            result = await db.execute(
+                select(FamilyVoicePreset).where(
+                    FamilyVoicePreset.family_id == family_id,
+                    FamilyVoicePreset.is_active == 1,
+                ).order_by(
+                    FamilyVoicePreset.sort_order,
+                    desc(FamilyVoicePreset.created_at),
+                )
+            )
+            preset = result.scalar_one_or_none()
+
+        if not preset:
+            raise NotFoundException("当前家庭暂无可用音色，请先克隆或创建音色")
+
+        return {
+            "id": preset.id,
+            "family_id": preset.family_id,
+            "baby_id": baby_id,
+            "voice_id": preset.voice_id,
+            "voice_name": preset.voice_name,
+            "voice_role": preset.voice_role,
+            "audio_url": preset.audio_url,
+            "duration_ms": preset.duration_ms,
+            "similarity_score": float(preset.similarity_score) if preset.similarity_score else None,
+            "is_default": bool(preset.is_default),
+            "is_active": preset.is_active,
+            "sort_order": preset.sort_order,
+            "created_at": preset.created_at.isoformat() if preset.created_at else None,
+            "updated_at": preset.updated_at.isoformat() if preset.updated_at else None,
+        }
+
+    @staticmethod
+    async def switch_voice_by_family_id(db: AsyncSession, family_id: int, voice_id: str) -> dict:
+        """按家庭切换默认音色，供硬件端使用"""
+        result = await db.execute(
+            select(FamilyVoicePreset).where(
+                FamilyVoicePreset.voice_id == voice_id,
+                FamilyVoicePreset.family_id == family_id,
+                FamilyVoicePreset.is_active == 1,
+            )
+        )
+        preset = result.scalar_one_or_none()
+        if not preset:
+            raise NotFoundException("音色记录不存在或不属于当前家庭")
+
+        await db.execute(
+            text("UPDATE family_voice_presets SET is_default=0 WHERE family_id=:family_id AND is_default=1")
+            .bindparams(family_id=family_id)
+        )
         preset.is_default = 1
         await db.flush()
 
@@ -599,6 +819,7 @@ class VoiceService:
             'voice_id': voice_id,
             'voice_name': preset.voice_name,
             'audio_data': audio_bytes.hex(),  # 返回十六进制编码的音频数据
+            'audio_url': f"data:audio/wav;base64,{base64.b64encode(audio_bytes).decode('utf-8')}",
             'text': text,
         }
 
@@ -609,7 +830,8 @@ voice_service = VoiceService()
 class VoiceCloneAPIClient:
     """语音克隆API客户端"""
 
-    BASE_URL = "http://223.247.96.246:30028/v1/audio"
+    VOICE_CLONE_BASE_URL = settings.VOICE_CLONE_API_URL or "http://223.247.96.246:30028/v1/audio"
+    TTS_API_URL = settings.TTS_API_URL or "http://127.0.0.1:40028/tts"
 
     @classmethod
     async def clone_voice(
@@ -635,7 +857,7 @@ class VoiceCloneAPIClient:
                 "text": text,
             }
             response = await client.post(
-                f"{cls.BASE_URL}/clone_voice",
+                f"{cls.VOICE_CLONE_BASE_URL}/clone_voice",
                 files=files,
                 data=data,
             )
@@ -647,7 +869,7 @@ class VoiceCloneAPIClient:
         """调用训练音色接口 POST /v1/audio/train"""
         async with httpx.AsyncClient(timeout=120.0) as client:
             response = await client.post(
-                f"{cls.BASE_URL}/train",
+                f"{cls.VOICE_CLONE_BASE_URL}/train",
                 json={
                     "audio_data": audio_data,
                     "voice_role": voice_role,
@@ -664,7 +886,7 @@ class VoiceCloneAPIClient:
             if family_id:
                 params["family_id"] = family_id
             response = await client.get(
-                f"{cls.BASE_URL}/list",
+                f"{cls.VOICE_CLONE_BASE_URL}/list",
                 params=params
             )
             response.raise_for_status()
@@ -675,7 +897,7 @@ class VoiceCloneAPIClient:
         """调用删除音色接口 DELETE /v1/audio/delete_voice"""
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.delete(
-                f"{cls.BASE_URL}/delete_voice",
+                f"{cls.VOICE_CLONE_BASE_URL}/delete_voice",
                 params={"voice_id": voice_id}
             )
             response.raise_for_status()
@@ -702,7 +924,7 @@ class VoiceCloneAPIClient:
         """
         async with httpx.AsyncClient(timeout=120.0) as client:
             response = await client.post(
-                f"{cls.BASE_URL}/generate_speech",
+                cls.TTS_API_URL,
                 json={
                     "input": input_text,
                     "voice": voice,
@@ -713,4 +935,18 @@ class VoiceCloneAPIClient:
                 }
             )
             response.raise_for_status()
+            content_type = response.headers.get("content-type", "")
+            if "application/json" in content_type:
+                data = response.json()
+                audio_b64 = data.get("audio_data") or data.get("audio_base64") or data.get("data")
+                if isinstance(audio_b64, str) and audio_b64:
+                    import base64
+                    return base64.b64decode(audio_b64)
+                audio_url = data.get("audio_url") or data.get("url")
+                if isinstance(audio_url, str) and audio_url:
+                    async with httpx.AsyncClient(timeout=120.0) as download_client:
+                        audio_resp = await download_client.get(audio_url)
+                        audio_resp.raise_for_status()
+                        return audio_resp.content
+                raise ExternalApiException("TTS服务返回了JSON，但未包含可用音频数据")
             return response.content

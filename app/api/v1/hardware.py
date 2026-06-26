@@ -17,8 +17,24 @@ from app.models.device import Device, VALID_WORK_MODES
 from app.models.baby import Baby
 from app.schemas.base import ApiResponse
 from app.services.hardware_service import hardware_service
+from app.services.voice_service import voice_service
 
 router = APIRouter(prefix="/hardware", tags=["硬件交互"])
+
+
+async def _get_device_or_raise(db: AsyncSession, device_sn: str) -> Device:
+    result = await db.execute(select(Device).where(Device.device_sn == device_sn))
+    device = result.scalar_one_or_none()
+    if not device:
+        raise HTTPException(
+            status_code=404,
+            detail={
+                "code": 404,
+                "message": "设备不存在",
+                "data": None,
+            },
+        )
+    return device
 
 
 # ==================== 硬件接口（无需用户认证） ====================
@@ -129,3 +145,65 @@ async def get_device_mode(
     """
     result = await hardware_service.get_device_mode(device_sn=device_sn)
     return success(data=result)
+
+
+@router.get("/voice/library", response_model=ApiResponse, summary="获取当前家庭音色列表 [硬件接口]")
+async def get_family_voice_library(
+    device_sn: str = Query(..., description="设备序列号"),
+    db: AsyncSession = Depends(get_db_session),
+):
+    """硬件端获取当前设备所属家庭的音色列表"""
+    device = await _get_device_or_raise(db, device_sn)
+    if not device.family_id:
+        return success(
+            data={
+                "device_sn": device_sn,
+                "family_id": None,
+                "voices": [],
+            },
+            message="设备尚未绑定家庭",
+        )
+
+    voices = await voice_service.get_voice_presets_by_family_id(db, family_id=device.family_id)
+    return success(
+        data={
+            "device_sn": device_sn,
+            "family_id": device.family_id,
+            "baby_id": device.baby_id,
+            "voices": voices,
+        },
+        message="获取家庭音色列表成功",
+    )
+
+
+@router.get("/voice/current", response_model=ApiResponse, summary="获取当前生效音色 [硬件接口]")
+async def get_family_current_voice(
+    device_sn: str = Query(..., description="设备序列号"),
+    db: AsyncSession = Depends(get_db_session),
+):
+    """硬件端获取当前设备所属家庭的当前生效音色"""
+    device = await _get_device_or_raise(db, device_sn)
+    if not device.family_id:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code": 400,
+                "message": "设备尚未绑定家庭",
+                "data": None,
+            },
+        )
+
+    current_voice = await voice_service.get_current_voice_by_family_id(
+        db,
+        family_id=device.family_id,
+        baby_id=device.baby_id,
+    )
+    return success(
+        data={
+            "device_sn": device_sn,
+            "family_id": device.family_id,
+            "baby_id": device.baby_id,
+            "voice": current_voice,
+        },
+        message="获取当前音色成功",
+    )

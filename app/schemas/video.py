@@ -6,11 +6,12 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 
 
-class VideoBase(BaseModel):
-    """视频基础字段"""
-    device_sn: str = Field(..., description="设备序列号")
-    video_url: str = Field(..., description="视频URL地址")
-    video_content_text: str = Field(..., description="视频AI理解后的文字内容")
+class VideoBase(BaseModel):
+    """视频基础字段"""
+    device_sn: str = Field(..., description="设备序列号")
+    video_url: str = Field(..., description="视频URL地址")
+    img_url: str | None = Field(None, description="视频封面图片URL")
+    video_content_text: str | None = Field(None, description="视频AI理解后的文字内容")
 
 
 class VideoCreate(VideoBase):
@@ -18,10 +19,11 @@ class VideoCreate(VideoBase):
     pass
 
 
-class VideoUpdate(BaseModel):
-    """更新视频记录"""
-    video_url: str | None = Field(None, description="视频URL地址")
-    video_content_text: str | None = Field(None, description="视频AI理解后的文字内容")
+class VideoUpdate(BaseModel):
+    """更新视频记录"""
+    video_url: str | None = Field(None, description="视频URL地址")
+    img_url: str | None = Field(None, description="视频封面图片URL")
+    video_content_text: str | None = Field(None, description="视频AI理解后的文字内容")
 
 
 class VideoResponse(VideoBase):

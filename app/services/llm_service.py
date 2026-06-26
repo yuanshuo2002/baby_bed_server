@@ -12,8 +12,16 @@ class LLMService:
     """大模型服务"""
 
     def __init__(self):
-        self.api_url = settings.LLM_API_URL or "http://223.247.96.246:30025/v1/chat/completions"
-        self.api_key = settings.LLM_API_KEY if hasattr(settings, 'LLM_API_KEY') and settings.LLM_API_KEY else ""
+        self.api_url = (
+            settings.REPORT_LLM_API_URL
+            or settings.LLM_API_URL
+            or "http://223.247.96.246:30025/v1/chat/completions"
+        )
+        self.api_key = (
+            settings.REPORT_LLM_API_KEY
+            or (settings.LLM_API_KEY if hasattr(settings, "LLM_API_KEY") and settings.LLM_API_KEY else "")
+        )
+        self.model_name = settings.REPORT_LLM_MODEL or settings.LLM_MODEL or "gemma4:latest"
 
     async def generate_growth_report(
         self,
@@ -51,7 +59,7 @@ class LLMService:
         prompt = self._build_prompt(report_type, period_start, period_end, event_stats)
 
         payload = {
-            "model": "qwen2.5-instruct",
+            "model": self.model_name,
             "messages": [
                 {"role": "system", "content": "你是一个专业的婴儿成长分析师，擅长分析婴儿的行为数据并给出科学的育儿建议。"},
                 {"role": "user", "content": prompt},
