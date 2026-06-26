@@ -67,10 +67,21 @@ class Settings(BaseSettings):
     WECHAT_APP_SECRET: str = ""
 
     # ========== 外部API地址 ==========
-    LLM_API_URL: str = "http://127.0.0.1:8001/v1/chat/completions"
+    LLM_API_URL: str = "http://127.0.0.1:11435/v1/chat/completions"
     LLM_API_KEY: str = ""
-    TTS_API_URL: str = "http://223.247.96.246:8002/tts"
-    ASR_API_URL: str = "http://223.247.96.246:8003/asr"
+    LLM_MODEL: str = "gemma4:latest"
+
+    # ========== 按接口分流的大模型配置 ==========
+    VOICE_CHAT_LLM_API_URL: str = ""
+    VOICE_CHAT_LLM_API_KEY: str = ""
+    VOICE_CHAT_LLM_MODEL: str = "gemma4:latest"
+
+    REPORT_LLM_API_URL: str = ""
+    REPORT_LLM_API_KEY: str = ""
+    REPORT_LLM_MODEL: str = "gemma4:latest"
+
+    TTS_API_URL: str = "http://127.0.0.1:40028/tts"
+    ASR_API_URL: str = "http://127.0.0.1:40021/asr"
 
     # ========== 语音克隆API (http://223.247.96.246:30028/v1/audio/) ==========
     VOICE_CLONE_API_URL: str = "http://223.247.96.246:30028/v1/audio"
