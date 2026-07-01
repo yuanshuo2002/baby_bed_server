@@ -26,10 +26,10 @@ flowchart LR
 
 ### 当前默认运行状态
 
-- 主后端：`http://127.0.0.1:34223`
-- ASR：`http://127.0.0.1:40021`
-- LLM：`http://127.0.0.1:11435`
-- TTS：`http://127.0.0.1:40028`
+- 主后端：`http://223.247.96.246:34223`
+- ASR：`http://223.247.96.246:40021`
+- LLM：`http://223.247.96.246:11435`
+- TTS：`http://223.247.96.246:40028`
 
 ### 当前模型/引擎
 
@@ -116,14 +116,14 @@ REDIS_PORT=6379
 REDIS_DB=0
 
 # 大模型
-LLM_API_URL=http://127.0.0.1:11435/v1/chat/completions
+LLM_API_URL=http://223.247.96.246:11435/v1/chat/completions
 LLM_MODEL=gemma4:latest
 VOICE_CHAT_LLM_MODEL=gemma4:latest
 REPORT_LLM_MODEL=gemma4:latest
 
 # 语音链路
-ASR_API_URL=http://127.0.0.1:40021/speech-to-text
-TTS_API_URL=http://127.0.0.1:40028/tts
+ASR_API_URL=http://223.247.96.246:40021/speech-to-text
+TTS_API_URL=http://223.247.96.246:40028/tts
 
 # 语音克隆（如果仍需要外部服务）
 VOICE_CLONE_API_URL=http://223.247.96.246:30028/v1/audio
@@ -180,7 +180,7 @@ uv run uvicorn app.services.melotts_tts_app:app --host 0.0.0.0 --port 40028
 你当前的 LLM 服务是 Ollama，默认接口：
 
 ```bash
-http://127.0.0.1:11435/v1/chat/completions
+http://223.247.96.246:11435/v1/chat/completions
 ```
 
 模型名：
@@ -199,10 +199,10 @@ gunicorn -c gunicorn_conf.py main:app
 ### 健康检查
 
 ```bash
-curl http://127.0.0.1:40021/health
-curl http://127.0.0.1:40028/health
-curl http://127.0.0.1:11435
-curl http://127.0.0.1:34223/api/v1/health
+curl http://223.247.96.246:40021/health
+curl http://223.247.96.246:40028/health
+curl http://223.247.96.246:11435
+curl http://223.247.96.246:34223/api/v1/health
 ```
 
 ---
@@ -245,7 +245,7 @@ curl http://127.0.0.1:34223/api/v1/health
 语音识别接口默认会转发到：
 
 ```text
-POST http://127.0.0.1:40021/speech-to-text
+POST http://223.247.96.246:40021/speech-to-text
 ```
 
 支持两种输入方式：
@@ -355,4 +355,3 @@ python3 -B -m py_compile main.py config.py app/api/v1/voice.py app/services/voic
 - 当前分支：`Simon`
 - 当前仓库：`baby_bed_server`
 - 目标用途：`server2` 主后端
-

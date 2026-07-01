@@ -872,7 +872,7 @@ class VoiceCloneAPIClient:
     """语音克隆API客户端"""
 
     VOICE_CLONE_BASE_URL = settings.VOICE_CLONE_API_URL or "http://223.247.96.246:30028/v1/audio"
-    TTS_API_URL = settings.TTS_API_URL or "http://127.0.0.1:40028/tts"
+    TTS_API_URL = settings.TTS_API_URL or "http://223.247.96.246:40028/tts"
 
     @classmethod
     async def clone_voice(
